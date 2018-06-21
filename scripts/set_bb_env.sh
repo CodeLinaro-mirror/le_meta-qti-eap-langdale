@@ -69,8 +69,6 @@ if [ "$MACHINE" = "" ]; then
   export MACHINE=imx6sxsabresd
 fi
 
-FOLDER_SUFFIX=${MACHINE}
-
 function build-imx6sxsabresd-image() {
   unset_bb_env
   export MACHINE=imx6sxsabresd
@@ -83,7 +81,7 @@ function build-imx6qsabrelite-image() {
   cdbitbake telematics-image
 }
 
-function build-all-eap-images() {
+function build-eap-image() {
   build-imx6sxsabresd-image
   build-imx6qsabrelite-image
 }
@@ -91,8 +89,7 @@ function build-all-eap-images() {
 # Utility commands
 buildclean() {
   set -x
-  cd ${WS}
-  rm -rf build-${FOLDER_SUFFIX}/.. && cd - || cd -
+  rm -rf ${WS}/build/tmp
   set +x
 }
 
@@ -119,7 +116,7 @@ list-build-commands()
 
 cdbitbake() {
   local ret=0
-  cd ${WS}/build-${FOLDER_SUFFIX}
+  cd ${WS}/build
   bitbake $@ && cd - || ret=$? && cd -
   return $ret
 }
@@ -132,9 +129,6 @@ rebake() {
 unset_bb_env() {
   unset DISTRO MACHINE PRODUCT VARIANT
 }
-
-# Find build templates from qti meta layer.
-export TEMPLATECONF="${WS}/sources/meta-qti-eap/conf"
 
 BBLAYERS_CONF="${WS}/sources/meta-qti-eap/conf/bblayers.conf.sample"
 
@@ -152,6 +146,6 @@ echo "BBLAYERS += \"${WS}/sources/poky/meta-poky\"" >> ${BBLAYERS_CONF}
 # BB_ENV_EXTRAWHITE, append our vars to the list
 export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} DL_DIR PRODUCT VARIANT HASROS"
 
-. ${WS}/sources/poky/oe-init-build-env ${WS}/build-${FOLDER_SUFFIX}
+. ${WS}/sources/poky/oe-init-build-env ${WS}/build
 
 list-build-commands

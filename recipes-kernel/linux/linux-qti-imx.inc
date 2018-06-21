@@ -1,3 +1,5 @@
+require ${COREBASE}/../eap-qti-kernel/linux-qti-addon.inc
+
 SRC_URI += "file://defconfig_append"
 
 do_defconfig_patch_append () {
