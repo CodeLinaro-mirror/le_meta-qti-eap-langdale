@@ -81,7 +81,7 @@ function build-imx6qsabrelite-image() {
   cdbitbake telematics-image
 }
 
-function build-eap-image() {
+function build-all-eap-images() {
   build-imx6sxsabresd-image
   build-imx6qsabrelite-image
 }
@@ -129,6 +129,9 @@ rebake() {
 unset_bb_env() {
   unset DISTRO MACHINE PRODUCT VARIANT
 }
+
+# Find build templates from qti meta layer.
+export TEMPLATECONF="${WS}/sources/meta-qti-eap/conf"
 
 BBLAYERS_CONF="${WS}/sources/meta-qti-eap/conf/bblayers.conf.sample"
 
