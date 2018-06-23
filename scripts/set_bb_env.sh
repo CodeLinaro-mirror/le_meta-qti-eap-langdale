@@ -140,6 +140,9 @@ echo "BBLAYERS += \"${WS}/sources/meta-openembedded/meta-oe\"" >> ${BBLAYERS_CON
 echo "BBLAYERS += \"${WS}/sources/poky/meta\"" >> ${BBLAYERS_CONF}
 echo "BBLAYERS += \"${WS}/sources/poky/meta-poky\"" >> ${BBLAYERS_CONF}
 
+# Find build templates from qti meta layer.
+export TEMPLATECONF="${WS}/sources/meta-qti-eap/conf"
+
 # Let bitbake use the following env-vars as if they were pre-set bitbake ones.
 # (BBLAYERS is explicitly blocked from this within OE-Core itself, though...)
 # oe-init-build-env calls oe-buildenv-internal which sets
