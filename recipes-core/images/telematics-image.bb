@@ -6,5 +6,3 @@ IMAGE_INSTALL += "iperf3"
 IMAGE_INSTALL += "kernel-modules"
 IMAGE_INSTALL += "network-conf"
 IMAGE_INSTALL += "pciutils"
-
-IMAGE_INSTALL += "data-oss"
