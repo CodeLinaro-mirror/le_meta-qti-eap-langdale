@@ -55,7 +55,7 @@ then
 fi
 
 umask 022
-unset DISTRO MACHINE PRODUCT VARIANT
+unset DISTRO MACHINE PRODUCT VARIANT TARGET
 
 # Find where this script is...
 scriptdir="$( cd "$(dirname "${BASH_SOURCE}")" ; pwd -P )"
@@ -72,12 +72,14 @@ fi
 function build-imx6sxsabresd-image() {
   unset_bb_env
   export MACHINE=imx6sxsabresd
+  export TARGET=eap-imx
   cdbitbake telematics-image
 }
 
 function build-imx6qsabrelite-image() {
   unset_bb_env
   export MACHINE=imx6qsabrelite
+  export TARGET=eap-imx
   cdbitbake telematics-image
 }
 
@@ -127,7 +129,7 @@ rebake() {
 }
 
 unset_bb_env() {
-  unset DISTRO MACHINE PRODUCT VARIANT
+  unset DISTRO MACHINE PRODUCT VARIANT TARGET
 }
 
 # Find build templates from qti meta layer.
@@ -150,7 +152,7 @@ export TEMPLATECONF="${WS}/sources/meta-qti-eap/conf"
 # (BBLAYERS is explicitly blocked from this within OE-Core itself, though...)
 # oe-init-build-env calls oe-buildenv-internal which sets
 # BB_ENV_EXTRAWHITE, append our vars to the list
-export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} DL_DIR PRODUCT VARIANT HASROS"
+export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} DL_DIR PRODUCT VARIANT TARGET HASROS"
 
 . ${WS}/sources/poky/oe-init-build-env ${WS}/build
 
