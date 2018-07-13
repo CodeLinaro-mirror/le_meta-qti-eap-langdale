@@ -149,7 +149,9 @@ BBLAYERS_CONF="${WS}/sources/meta-qti-eap/conf/bblayers.conf.sample"
 # BBLAYERS (by OE-Core class policy...Bitbake understands it...) to support
 # dynamic workspace layer functionality.
 python $scriptdir/get_bblayers.py ${WS}/sources \"meta*\" > ${BBLAYERS_CONF}
+echo "BBLAYERS += \"${WS}/sources/meta-openembedded/meta-networking\"" >> ${BBLAYERS_CONF}
 echo "BBLAYERS += \"${WS}/sources/meta-openembedded/meta-oe\"" >> ${BBLAYERS_CONF}
+echo "BBLAYERS += \"${WS}/sources/meta-openembedded/meta-python\"" >> ${BBLAYERS_CONF}
 echo "BBLAYERS += \"${WS}/sources/poky/meta\"" >> ${BBLAYERS_CONF}
 echo "BBLAYERS += \"${WS}/sources/poky/meta-poky\"" >> ${BBLAYERS_CONF}
 
