@@ -17,3 +17,9 @@ DEPENDS += "lzop-native bc-native"
 COMPATIBLE_MACHINE = "(nitrogen6x|nitrogen6x-lite|nitrogen6sx|nitrogen7)"
 
 require linux-qti-imx.inc
+
+SRC_URI += "file://defconfig_append"
+
+do_patch_extra_append () {
+    cat ${WORKDIR}/defconfig_append >> ${WORKDIR}/defconfig
+}

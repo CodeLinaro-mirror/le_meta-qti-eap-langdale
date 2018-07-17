@@ -1,10 +1,7 @@
-require ${COREBASE}/../eap-qti-kernel/linux-qti-addon.inc
+require ${WORKSPACE}/sources/eap-qti-kernel/linux-qti-addon.inc
 
-SRC_URI += "file://defconfig_append"
-
-do_patch_extra_append () {
-    cat ${WORKDIR}/defconfig_append >> ${WORKDIR}/defconfig
-}
+SRC_URI += "file://0001-pci-msi-Enable-multi-MSI-teardown-for-pci-designware.patch"
+SRC_URI += "file://0002-pci-imx-Increase-number-of-retries-for-link-up.patch"
 
 do_install_append() {
     oe_runmake_call -C ${STAGING_KERNEL_DIR} ARCH=${ARCH} CC="${KERNEL_CC}" \
