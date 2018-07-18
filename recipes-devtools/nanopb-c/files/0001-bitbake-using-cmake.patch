@@ -1,6 +1,6 @@
-From 40c3b4af7717dfa5725f92cc817a064e29e5261e Mon Sep 17 00:00:00 2001
-From: Praveen Yaramada <pyaramada@codeaurora.org>
-Date: Thu, 31 Aug 2017 16:17:33 -0700
+From e1b8fbe319e923a8414855a772b75147f4beadd0 Mon Sep 17 00:00:00 2001
+From: Dheeraj Shetty <dshetty@codeaurora.org>
+Date: Mon, 9 Jul 2018 15:54:51 -0700
 Subject: [PATCH] bitbake using cmake
 
 ---
@@ -62,7 +62,7 @@ index b8a2946..046ebc5 100644
      install(EXPORT nanopb-targets
          DESTINATION ${CMAKE_INSTALL_CMAKEDIR}
 diff --git a/extra/nanopb-config.cmake b/extra/nanopb-config.cmake
-index 4f726a6..3a75728 100644
+index 4f726a6..d4effb2 100644
 --- a/extra/nanopb-config.cmake
 +++ b/extra/nanopb-config.cmake
 @@ -1 +1,59 @@

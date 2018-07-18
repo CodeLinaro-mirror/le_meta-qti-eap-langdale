@@ -21,18 +21,15 @@ SRC_URI += "file://0001-bitbake-using-cmake.patch"
 
 S = "${WORKDIR}/git"
 
-# need to export these variables for python-config to work
-FILES_${PN} += "/usr/include/*"
-FILES_${PN} += "/usr/lib/*"
-FILES_${PN} += "/usr/lib64/*"
+FILES_SOLIBSDEV = ""
+FILES_${PN} += "${libdir}/*"
 
+# need to export these variables for python-config to work
 export BUILD_SYS
 export HOST_SYS
 export STAGING_INCDIR
 export STAGING_LIBDIR
 
 EXTRA_OECMAKE_append_class-native = "-Dnanopb_BUILD_GENERATOR=ON -Dnanopb_BUILD_RUNTIME=OFF -Dnanopb_MSVC_STATIC_RUNTIME=OFF"
-INSANE_SKIP_${PN} += "dev-deps"
-INSANE_SKIP_${PN}-dev += "dev-elf"
 
 BBCLASSEXTEND = "native nativesdk"
