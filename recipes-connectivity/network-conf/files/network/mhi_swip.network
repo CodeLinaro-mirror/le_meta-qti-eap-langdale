@@ -4,3 +4,6 @@ Name=mhi_swip0
 [Network]
 Address=192.168.100.2/24
 IPForward=ipv4
+
+[Link]
+MTUBytes=8192
