@@ -20,3 +20,9 @@ DEFAULT_PREFERENCE = "1"
 COMPATIBLE_MACHINE = "(mx6|mx7)"
 
 require linux-qti-imx.inc
+
+SRC_URI += "file://defconfig_append"
+
+do_patch_extra_append () {
+    cat ${WORKDIR}/defconfig_append >> ${WORKDIR}/defconfig
+}
