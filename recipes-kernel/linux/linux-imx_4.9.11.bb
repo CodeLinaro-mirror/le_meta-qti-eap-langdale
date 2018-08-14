@@ -26,3 +26,5 @@ SRC_URI += "file://defconfig_append"
 do_patch_extra_append () {
     cat ${WORKDIR}/defconfig_append >> ${WORKDIR}/defconfig
 }
+
+SRC_URI += "file://0001-ARM-dts-Change-COL4-ROW4-to-the-GPIO-function.patch"
