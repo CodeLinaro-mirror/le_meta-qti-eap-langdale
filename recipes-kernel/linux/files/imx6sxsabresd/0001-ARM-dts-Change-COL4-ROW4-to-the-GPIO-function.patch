@@ -1,0 +1,39 @@
+From 7afae7267f3bc1d80d74a40f6960b961c59f6a37 Mon Sep 17 00:00:00 2001
+From: Gustavo Solaira <gustavos@codeaurora.org>
+Date: Tue, 14 Aug 2018 14:30:05 -0700
+Subject: [PATCH] ARM: dts: Change COL4/ROW4 to the GPIO function
+
+Disable I2C3 and change the functions of COL4 and
+ROW4 to GPIO. Set COL4 to pull down and ROW4 to pull
+up.
+
+Signed-off-by: Gustavo Solaira <gustavos@codeaurora.org>
+---
+ arch/arm/boot/dts/imx6sx-sdb.dtsi | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm/boot/dts/imx6sx-sdb.dtsi b/arch/arm/boot/dts/imx6sx-sdb.dtsi
+index eaea8ff..06014ef 100644
+--- a/arch/arm/boot/dts/imx6sx-sdb.dtsi
++++ b/arch/arm/boot/dts/imx6sx-sdb.dtsi
+@@ -469,7 +469,7 @@
+ 	clock-frequency = <100000>;
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_i2c3>;
+-	status = "okay";
++	status = "disabled";
+ 
+ 	isl29023@44 {
+ 		compatible = "fsl,isl29023";
+@@ -709,6 +709,8 @@
+ 				MX6SX_PAD_SD1_DATA0__GPIO6_IO_2 0x17059
+ 				MX6SX_PAD_SD1_DATA3__GPIO6_IO_5 0xb000
+ 				MX6SX_PAD_CSI_DATA03__GPIO1_IO_17 0x17059
++				MX6SX_PAD_KEY_COL4__GPIO2_IO_14 0x17059
++				MX6SX_PAD_KEY_ROW4__GPIO2_IO_19 0x17059
+ 			>;
+ 		};
+ 
+-- 
+1.9.1
+
