@@ -44,4 +44,7 @@ do_install() {
     echo "./${SRCNAME}-${PV}-py${PYTHON_BASEVERSION}.egg" > ${D}${PYTHON_SITEPACKAGES_DIR}/protobuf.pth
     cp "${S}/dist/${SRCNAME}-${PV}-py${PYTHON_BASEVERSION}.egg" ${D}${PYTHON_SITEPACKAGES_DIR}
     cp "${S}/${SRCNAME}.egg-info/PKG-INFO" "${D}${PYTHON_SITEPACKAGES_DIR}/${SRCNAME}-${PV}-py${PYTHON_BASEVERSION}.egg-info"
+
+    # avoid duplication of the egg file
+    rm -rf ${PYTHON_SITEPACKAGES_DIR}/${SRCNAME}-${PV}-py${PYTHON_BASEVERSION}.egg
 }
