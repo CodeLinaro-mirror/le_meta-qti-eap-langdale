@@ -152,6 +152,10 @@ echo "BBLAYERS += \"${WS}/sources/meta-openembedded/meta-python\"" >> ${BBLAYERS
 echo "BBLAYERS += \"${WS}/sources/poky/meta\"" >> ${BBLAYERS_CONF}
 echo "BBLAYERS += \"${WS}/sources/poky/meta-poky\"" >> ${BBLAYERS_CONF}
 
+#Fix KW build
+KW_PATCH=$scriptdir/files/0001-poky-fix-KW-build-issue.patch
+patch -p 1 -d ${WS}/sources/poky/ -N < ${KW_PATCH} > /dev/null 2>&1
+
 # Find build templates from qti meta layer.
 export TEMPLATECONF="${WS}/sources/meta-qti-eap/conf"
 
