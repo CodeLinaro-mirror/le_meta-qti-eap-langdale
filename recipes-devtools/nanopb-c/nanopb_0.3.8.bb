@@ -24,6 +24,9 @@ S = "${WORKDIR}/git"
 FILES_SOLIBSDEV = ""
 FILES_${PN} += "${libdir}/*"
 
+# Add support for tag numbers > 255 and fields larger than 255 bytes or 255 array entries
+CFLAGS += "-DPB_FIELD_16BIT=1"
+
 # need to export these variables for python-config to work
 export BUILD_SYS
 export HOST_SYS
@@ -31,5 +34,6 @@ export STAGING_INCDIR
 export STAGING_LIBDIR
 
 EXTRA_OECMAKE_append_class-native = "-Dnanopb_BUILD_GENERATOR=ON -Dnanopb_BUILD_RUNTIME=OFF -Dnanopb_MSVC_STATIC_RUNTIME=OFF"
+EXTRA_OECMAKE += "-DCMAKE_INSTALL_CMAKEDIR:STRING=${libdir}/cmake/nanopb"
 
 BBCLASSEXTEND = "native nativesdk"

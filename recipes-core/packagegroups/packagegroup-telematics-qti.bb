@@ -1,4 +1,5 @@
 SUMMARY = "Telematics QTI packages"
+LICENSE = "MIT"
 PR = "r0"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
