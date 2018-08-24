@@ -96,7 +96,9 @@ function build-all-eap-images() {
 # Utility commands
 buildclean() {
   set -x
-  rm -rf ${WS}/build/tmp
+  cd ${WS}/build
+
+  rm -rf bitbake.lock pseudodone sstate-cache tmp/* cache
   set +x
 }
 
