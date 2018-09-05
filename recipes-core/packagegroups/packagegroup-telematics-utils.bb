@@ -1,5 +1,5 @@
 SUMMARY = "Telematics Utils packages"
-LICENSE = "MIT"
+LICENSE = "BSD-3-Clause"
 PR = "r0"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
