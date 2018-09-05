@@ -1,0 +1,2 @@
+## PCIe mhi_uci configuration for qmi
+SUBSYSTEM=="mhi_uci", ACTION=="add", KERNEL=="mhi_*_pipe_14", TAG+="systemd", ENV{SYSTEMD_WANTS}="mhi-qmi@%k.service"
