@@ -75,12 +75,6 @@ function build-imx6sxsabresd-image() {
   cdbitbake telematics-image
 }
 
-function build-imx6qsabrelite-image() {
-  unset_bb_env
-  export MACHINE=imx6qsabrelite
-  cdbitbake telematics-image
-}
-
 function build-qemuarm64-image() {
   unset_bb_env
   export MACHINE=qemuarm64
@@ -89,7 +83,6 @@ function build-qemuarm64-image() {
 
 function build-all-eap-images() {
   build-imx6sxsabresd-image
-  build-imx6qsabrelite-image
   build-qemuarm64-image
 }
 
