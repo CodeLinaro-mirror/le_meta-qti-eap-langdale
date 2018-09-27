@@ -75,15 +75,32 @@ function build-imx6sxsabresd-image() {
   cdbitbake telematics-image
 }
 
+function build-imx6sxsabresd-cv2x-image() {
+  unset_bb_env
+  export MACHINE=imx6sxsabresd-cv2x
+  cdbitbake telematics-image
+}
+
 function build-qemuarm64-image() {
   unset_bb_env
   export MACHINE=qemuarm64
   cdbitbake telematics-image
 }
 
+function build-qemuarm64-cv2x-image() {
+  unset_bb_env
+  export MACHINE=qemuarm64-cv2x
+  cdbitbake telematics-image
+}
+
 function build-all-eap-images() {
   build-imx6sxsabresd-image
   build-qemuarm64-image
+}
+
+function build-all-eap-cv2x-images() {
+  build-imx6sxsabresd-cv2x-image
+  build-qemuarm64-cv2x-image
 }
 
 # Utility commands
