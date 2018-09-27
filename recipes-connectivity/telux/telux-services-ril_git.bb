@@ -14,3 +14,9 @@ EXTRA_OECMAKE += "${@bb.utils.contains('MACHINE_FEATURES', 'external-ap', '-DRIL
 DEPENDS += "glib-2.0 nanopb python-protobuf-native python-six-native"
 
 SYSTEMD_SERVICE_${PN} = "rild.service"
+
+do_install_append() {
+# '@LIBDIR@' is a placeholder in rild.service for the lib directory path.
+# Replace this with ${libdir} to get the correct absolute path for the machine.
+    sed -i -e 's#@LIBDIR@#${libdir}#g' ${D}${systemd_unitdir}/system/rild.service
+}
