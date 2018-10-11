@@ -3,3 +3,4 @@ Name=eth*
 
 [Network]
 DHCP=yes
+IPForward=yes
