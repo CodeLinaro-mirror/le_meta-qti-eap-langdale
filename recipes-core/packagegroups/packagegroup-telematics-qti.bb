@@ -10,6 +10,7 @@ inherit packagegroup
 
 RDEPENDS_${PN} += "data-oss"
 RDEPENDS_${PN} += "telematics-conf"
+RDEPENDS_${PN} += "telux"
 RDEPENDS_${PN} += "telux-loc"
 RDEPENDS_${PN} += "telux-lib"
 RDEPENDS_${PN} += "telux-samples"
