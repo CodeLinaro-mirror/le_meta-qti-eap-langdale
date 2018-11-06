@@ -10,6 +10,6 @@ ALTERNATIVE_PRIORITY[resolv-conf] ?= "50"
 
 do_install_append() {
 	if ${@bb.utils.contains('PACKAGECONFIG', 'resolved', 'true', 'false', d)}; then
-		ln -s ../run/systemd/resolve/resolv.conf ${D}${sysconfdir}/resolv-conf.systemd
+		ln -sf ../run/systemd/resolve/resolv.conf ${D}${sysconfdir}/resolv-conf.systemd
 	fi
 }
