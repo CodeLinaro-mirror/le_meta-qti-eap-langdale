@@ -4,6 +4,7 @@ SRC_URI += "file://defconfig_append"
 SRC_URI += "file://0001-pci-msi-Enable-multi-MSI-teardown-for-pci-designware.patch"
 SRC_URI += "file://0002-pci-imx-Increase-number-of-retries-for-link-up.patch"
 SRC_URI += "file://0003-xhci-Don-t-show-incorrect-WARN-message-about-events-.patch"
+SRC_URI_append_imx8qxpmek += "file://0001-Reduce-PCIe-link-speed-to-Gen2.patch"
 
 do_install_append() {
     oe_runmake_call -C ${STAGING_KERNEL_DIR} ARCH=${ARCH} CC="${KERNEL_CC}" \
