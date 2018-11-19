@@ -9,6 +9,8 @@ inherit packagegroup
 # Open source packages
 
 RDEPENDS_${PN} += "data-oss"
+RDEPENDS_${PN} += "gps-utils"
+RDEPENDS_${PN} += "location-client-api"
 RDEPENDS_${PN} += "telematics-conf"
 RDEPENDS_${PN} += "telux"
 RDEPENDS_${PN} += "telux-loc"
