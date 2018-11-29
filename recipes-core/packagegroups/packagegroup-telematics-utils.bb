@@ -6,6 +6,8 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit packagegroup
 
+RDEPENDS_${PN} += "chrony"
+RDEPENDS_${PN} += "chronyc"
 RDEPENDS_${PN} += "dnsmasq"
 RDEPENDS_${PN} += "e2fsprogs-resize2fs"
 RDEPENDS_${PN} += "iperf3"
