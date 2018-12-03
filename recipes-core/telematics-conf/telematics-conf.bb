@@ -7,8 +7,10 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/${LICENSE};md5=550794465ba0ec53
 SRC_URI += "file://network"
 SRC_URI += "file://system"
 SRC_URI += "file://udev"
+SRC_URI += "file://usb"
 
 FILES_${PN} += "${sysconfdir}"
+FILES_${PN} += "${sbindir}"
 
 SYSTEMD_SERVICE_${PN} = "iptables-masquerade.service"
 
@@ -19,4 +21,6 @@ do_install() {
     install -m 0644 ${WORKDIR}/udev/* ${D}${sysconfdir}/udev/rules.d/
     install -d ${D}${sysconfdir}/systemd/system
     install -m 0644 ${WORKDIR}/system/* ${D}${sysconfdir}/systemd/system/
+    install -d ${D}${sbindir}/
+    install -m 0755 ${WORKDIR}/usb/* ${D}${sbindir}/
 }
