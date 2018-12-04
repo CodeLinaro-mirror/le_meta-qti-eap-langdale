@@ -1,3 +1,3 @@
 ## USB sahara for ramdump
-SUBSYSTEM=="usb", ACTION=="add", ATTRS{idVendor}=="05c6", ATTRS{idProduct}=="901d|901f|902d|9025", ATTRS{bNumInterfaces}==" 1", RUN+="/sbin/modprobe usbserial vendor=0x%E{ID_VENDOR_ID} product=0x%E{ID_MODEL_ID}"
-SUBSYSTEM=="usb", ACTION=="remove", SUBSYSTEM=="tty", ENV{ID_VENDOR_ID}=="05c6", ENV{ID_MODEL_ID}=="901d|901f|902d|9025", RUN+="/bin/sh -c '/sbin/modprobe -r usbserial'"
+SUBSYSTEM=="usb", ACTION=="add", ATTRS{idVendor}=="05c6", ATTRS{idProduct}=="900e|901d|901f|902d|9025", ATTRS{bNumInterfaces}==" 1", RUN+="/sbin/modprobe usbserial vendor=0x%E{ID_VENDOR_ID} product=0x%E{ID_MODEL_ID}"
+SUBSYSTEM=="usb", ACTION=="remove", SUBSYSTEM=="tty", ENV{ID_VENDOR_ID}=="05c6", ENV{ID_MODEL_ID}=="900e|901d|901f|902d|9025", RUN+="/bin/sh -c '/sbin/modprobe -r usbserial'"
