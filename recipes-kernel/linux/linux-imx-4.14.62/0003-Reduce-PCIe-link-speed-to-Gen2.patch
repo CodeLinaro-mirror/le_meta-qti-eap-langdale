@@ -1,0 +1,27 @@
+From 8986b0216b4d8a5634718b4597e83f69f37feaae Mon Sep 17 00:00:00 2001
+From: Gustavo Solaira <gustavos@codeaurora.org>
+Date: Wed, 7 Nov 2018 14:31:06 -0800
+Subject: [PATCH 3/3] Reduce PCIe link speed to Gen2
+
+Reduce the link speed for i.MX8 to Gen2 to
+avoid enumeration failures due to link quality.
+---
+ arch/arm64/boot/dts/freescale/fsl-imx8dx.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/freescale/fsl-imx8dx.dtsi b/arch/arm64/boot/dts/freescale/fsl-imx8dx.dtsi
+index 3f2ba667..a9d94e2 100644
+--- a/arch/arm64/boot/dts/freescale/fsl-imx8dx.dtsi
++++ b/arch/arm64/boot/dts/freescale/fsl-imx8dx.dtsi
+@@ -3264,7 +3264,7 @@
+ 				 <0 0 0 3 &gic 0 107 4>,
+ 				 <0 0 0 4 &gic 0 108 4>;
+ 		power-domains = <&pd_pcie>;
+-		fsl,max-link-speed = <3>;
++		fsl,max-link-speed = <2>;
+ 		hsio-cfg = <PCIEAX2PCIEBX1>;
+ 		hsio = <&hsio>;
+ 		ctrl-id = <1>; /* pcieb */
+-- 
+1.9.1
+
