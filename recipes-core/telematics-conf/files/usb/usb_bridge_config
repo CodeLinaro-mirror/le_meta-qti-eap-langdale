@@ -39,7 +39,29 @@ GADGET_DIR=/sys/kernel/config/usb_gadget
 STRINGS_DIR=strings/0x409
 
 print_usage () {
-    echo "Usage: $SCRIPT_NAME <iface number> ... <iface number>"
+    echo "Usage: $SCRIPT_NAME [options]"
+    echo -e "\t-e <iface number> ... <iface number>: Enable listed interfaces"
+    echo -e "\t-d <iface number> ... <iface number>: Disable listed interfaces"
+    echo -e "\t-d: Disable all interfaces"
+    echo -e "\t-h: Print help"
+}
+
+disconnect_all () {
+    # Remove existing functions
+    rm -rf $GADGET_DIR/g1/configs/ub.1/usb_bridge.*
+    rm -rf $GADGET_DIR/g1/functions/usb_bridge.*
+}
+
+disconnect_select () {
+    # Remove listed functions
+    for intf in "${@}"; do
+        if [ -L "$GADGET_DIR/g1/configs/ub.1/usb_bridge.$intf" ]; then
+            rm -rf $GADGET_DIR/g1/configs/ub.1/usb_bridge.$intf
+        fi
+        if [ -d "$GADGET_DIR/g1/functions/usb_bridge.$intf" ]; then
+            rm -rf $GADGET_DIR/g1/functions/usb_bridge.$intf
+        fi
+    done
 }
 
 if [ "$#" -le 0 ]; then
@@ -47,17 +69,32 @@ if [ "$#" -le 0 ]; then
     exit 1
 fi
 
+if [ $1 != '-e' ] && [ $1 != '-d' ];then
+    print_usage
+    exit 1
+fi
+
 # Setup gadget device
 cd $GADGET_DIR
 if [ ! -d "$GADGET_DIR/g1" ]; then
+    if [ $1 == '-d' ];then
+        exit 0
+    fi
     mkdir g1
 else
     # Check if gadget already enabled
     IS_ENABLE=$(cat $GADGET_DIR/g1/UDC)
     if [ "$IS_ENABLE" == "$UDC_NAME" ]; then
-        echo "Gadget is enabled. Disable gadget before calling $SCRIPT_NAME"
-        echo "echo \"\" > $GADGET_DIR/g1/UDC"
-        exit 1
+        echo "" > $GADGET_DIR/g1/UDC
+    fi
+    if [ $1 == '-d' ]; then
+        if [ "$#" -eq 1 ]; then
+            disconnect_all
+        else
+            disconnect_select "${@:2}"
+            echo "$UDC_NAME" > $GADGET_DIR/g1/UDC
+        fi
+        exit 0
     fi
 fi
 
@@ -69,15 +106,17 @@ fi
 
 echo "QTI" > $STRINGS_DIR/manufacturer
 echo "QTI Modem" > $STRINGS_DIR/product
-echo "123456" > $STRINGS_DIR/serialnumber
+echo "qti-modem" > $STRINGS_DIR/serialnumber
 echo $VID > idVendor
 echo $PID > idProduct
 
 if [ ! -d "$GADGET_DIR/g1/configs/ub.1" ]; then
     mkdir configs/ub.1
+else
+    disconnect_all
 fi
 
-for intf in "$@"; do
+for intf in "${@:2}"; do
     if [ ! -d "$GADGET_DIR/g1/functions/usb_bridge.$intf" ]; then
         mkdir functions/usb_bridge.$intf
     fi
