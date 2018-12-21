@@ -1,14 +1,14 @@
 inherit autotools-brokensep qcommon pkgconfig
 
-DESCRIPTION = "location client api library"
+DESCRIPTION = "loc socket library"
 PR = "r1"
 LICENSE = "BSD"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/${LICENSE};md5=3775480a712fc46a69647678acb234cb"
 
-SRC_DIR = "${WORKSPACE}/vendor/qcom/opensource/location/client_api"
-S = "${WORKDIR}/vendor/qcom/opensource/location/client_api"
+SRC_DIR = "${WORKSPACE}/vendor/qcom/opensource/location/utils/loc_socket"
+S = "${WORKDIR}/vendor/qcom/opensource/location/utils/loc_socket"
 
-DEPENDS = "loc-socket location-hal-daemon-hdr"
+DEPENDS = "gps-utils qmi-framework"
 
 EXTRA_OECONF += "${@bb.utils.contains('MACHINE_FEATURES', 'external-ap', '--with-external_ap', '', d)}"
 EXTRA_OECONF += "--with-glib"
