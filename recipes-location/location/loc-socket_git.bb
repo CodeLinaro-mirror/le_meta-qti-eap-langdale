@@ -10,5 +10,4 @@ S = "${WORKDIR}/vendor/qcom/opensource/location/utils/loc_socket"
 
 DEPENDS = "gps-utils qmi-framework"
 
-EXTRA_OECONF += "${@bb.utils.contains('MACHINE_FEATURES', 'external-ap', '--with-external_ap', '', d)}"
 EXTRA_OECONF += "--with-glib"
