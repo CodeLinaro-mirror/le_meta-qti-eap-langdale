@@ -1,0 +1,55 @@
+meta-qti-eap
+============
+
+This layer provides packages and a kernel add-on package to enable connecting
+an AP (applications processor) to a QTI modem system. The connection can be
+done via PCIe or USB.
+
+The Telematics SDK is included to facilitate creating applications that
+communicate with the modem to perform various actions and get notified about
+state changes. Some examples are: starting a voice call, sending an SMS,
+starting CV2X mode, etc.
+
+A default telematics-image is provided for initial verification of the system.
+It is based on the core-image-minimal image with utilities and QTI packages
+added to it.
+
+Dependencies
+------------
+
+This layer depends on:
+
+  git://git.openembedded.org/openembedded-core
+  git://git.yoctoproject.org/meta-yocto
+  git://git.openembedded.org/meta-openembedded
+
+Adding the meta-qti-eap layer to your build
+-------------------------------------------
+
+In order to use this layer, you need to make the build system aware of
+it.
+
+Assuming the meta-qti-eap layer exists at the top-level of your
+yocto build tree, you can add it to the build system by adding the
+location of the meta-qti-eap layer to bblayers.conf, along with any
+other layers needed. e.g.:
+
+  BBLAYERS += "/path/to/root/sources/meta-qti-eap"
+
+Making a build
+--------------
+
+Example using the qemuarm64 machine. First source the environment script:
+
+$ source sources/meta-qti-eap/scripts/set_env_bb.sh
+
+This will create the build folder and move to it. Now start the build:
+
+$ MACHINE=qemuarm64 bitbake telematics-image
+
+License
+-------
+
+All metadata is MIT licensed unless otherwise stated. Source code included
+in tree for individual recipes is under the LICENSE stated in each recipe
+(.bb file) unless otherwise stated.
