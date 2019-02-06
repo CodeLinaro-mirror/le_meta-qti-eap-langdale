@@ -11,4 +11,6 @@ do_install_append() {
 do_kernel_configme_append() {
     cat ${WORKDIR}/eap-qti-kernel/defconfig >> ${B}/.config
     echo "CONFIG_PCI=y" >> ${B}/.config
+    echo "CONFIG_USB=y" >> ${B}/.config
+    echo "CONFIG_USB_XHCI_HCD=y" >> ${B}/.config
 }
