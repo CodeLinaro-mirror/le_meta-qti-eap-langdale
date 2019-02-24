@@ -13,6 +13,6 @@ do_install_append() {
         LD="${KERNEL_LD}" headers_install O=${STAGING_KERNEL_BUILDDIR}
 }
 
-do_patch_extra_append () {
+do_preconfigure_prepend () {
     cat ${WORKDIR}/defconfig_append >> ${WORKDIR}/defconfig
 }
