@@ -1,4 +1,4 @@
-PACKAGECONFIG += "networkd resolved coredump"
+PACKAGECONFIG_append += "networkd resolved coredump"
 
 FILES_${PN} += "${sysconfdir}/resolv-conf.systemd"
 
