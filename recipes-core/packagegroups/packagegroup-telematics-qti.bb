@@ -14,7 +14,6 @@ RDEPENDS_${PN} += "data-oss"
 RDEPENDS_${PN} += "gps-utils"
 ##### TelSDK component #####
 RDEPENDS_${PN} += "telux"
-RDEPENDS_${PN} += "telux-loc"
 RDEPENDS_${PN} += "telux-lib"
 RDEPENDS_${PN} += "telux-samples"
 ##### Misc packages #####
