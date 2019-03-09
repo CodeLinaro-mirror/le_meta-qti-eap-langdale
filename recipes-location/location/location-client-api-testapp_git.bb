@@ -1,4 +1,4 @@
-inherit autotools qcommon qlicense
+inherit autotools qcommon
 
 DESCRIPTION = "location client api test application "
 PR = "r1"
