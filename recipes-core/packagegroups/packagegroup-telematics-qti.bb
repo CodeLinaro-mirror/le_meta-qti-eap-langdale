@@ -20,7 +20,7 @@ RDEPENDS_${PN} += "telux-samples"
 ##### Misc packages #####
 RDEPENDS_${PN} += "telematics-conf"
 
-##### Packages that depend on proprietary layers #####
+##### Packages with QTI dependencies #####
 RDEPENDS_${PN} += "${@oe.utils.conditional('WITH_PROP_LAYER', 'yes', 'loc-socket', '', d)}"
 RDEPENDS_${PN} += "${@oe.utils.conditional('WITH_PROP_LAYER', 'yes', 'location-client-api', '', d)}"
 RDEPENDS_${PN} += "${@oe.utils.conditional('WITH_PROP_LAYER', 'yes', 'location-client-api-testapp', '', d)}"
