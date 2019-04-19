@@ -1,4 +1,4 @@
-inherit qcommon cmake
+inherit qcommon cmake systemd
 
 SUMMARY = "Telematics SDK Samples"
 DESCRIPTION = "Telematics SDK Samples"
@@ -9,6 +9,9 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/${LICENSE};md5=550794465ba0ec53
 SRC_DIR = "${WORKSPACE}/telux/public/"
 S = "${WORKDIR}/telux/public/samples"
 
+FILES_${PN} += "${systemd_unitdir}"
+
+EXTRA_OECMAKE += "${@bb.utils.contains('DISTRO_FEATURES', 'systemd', '-DWITH_SYSTEMD:BOOL=ON', '', d)}"
 EXTRA_OECMAKE += "${@bb.utils.contains('MACHINE_FEATURES', 'cv2x', '-DMACHINE_HAS_CV2X_ONLY=ON', '', d)} "
 
 SRCREV = "${AUTOREV}"
