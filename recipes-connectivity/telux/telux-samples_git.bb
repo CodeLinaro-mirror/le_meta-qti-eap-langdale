@@ -16,4 +16,4 @@ EXTRA_OECMAKE += "${@bb.utils.contains('MACHINE_FEATURES', 'cv2x', '-DMACHINE_HA
 
 SRCREV = "${AUTOREV}"
 
-DEPENDS += "telux telux-lib"
+DEPENDS += "telux telux-lib systemd"
