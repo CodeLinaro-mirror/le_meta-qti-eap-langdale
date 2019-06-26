@@ -12,7 +12,8 @@ S = "${WORKDIR}/telux/public/samples"
 FILES_${PN} += "${systemd_unitdir}"
 
 EXTRA_OECMAKE += "${@bb.utils.contains('DISTRO_FEATURES', 'systemd', '-DWITH_SYSTEMD:BOOL=ON', '', d)}"
-EXTRA_OECMAKE += "${@bb.utils.contains('MACHINE_FEATURES', 'cv2x', '-DMACHINE_HAS_CV2X_ONLY=ON', '', d)} "
+EXTRA_OECMAKE += "${@bb.utils.contains('MACHINE_FEATURES', 'cv2x-only', '-DMACHINE_HAS_CV2X_ONLY=ON', '', d)} "
+EXTRA_OECMAKE += "${@bb.utils.contains('MACHINE_FEATURES', 'wwan-plus-cv2x', '-DMACHINE_HAS_CV2X=ON', '', d)} "
 
 SRCREV = "${AUTOREV}"
 
