@@ -2,5 +2,5 @@
 Name=usb0
 
 [Network]
-Address=192.168.100.2/24
-IPForward=ipv4
+DHCP=yes
+IPForward=yes
