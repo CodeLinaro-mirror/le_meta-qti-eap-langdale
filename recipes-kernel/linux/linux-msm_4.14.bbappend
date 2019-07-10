@@ -1,6 +1,5 @@
 do_unpack_extra () {
     cp -r ${WORKDIR}/kernel/eap-qti-kernel/* ${S}/
-    cp ${WORKDIR}/kernel/eap-qti-kernel/devicetree/* ${S}/arch/${ARCH}/boot/dts/qcom/
     echo "source \"drivers/qti/Kconfig\"" >> ${S}/drivers/Kconfig
     echo "obj-y += qti/" >> ${S}/drivers/Makefile
     echo "header-y += qrtr.h" >> ${S}/include/uapi/linux/Kbuild
@@ -11,6 +10,9 @@ do_unpack_extra () {
     echo "# CONFIG_MHI_BUS is not set" >> ${S}/arch/${ARCH}/configs/${KERNEL_CONFIG}
     echo "# CONFIG_QRTR is not set" >> ${S}/arch/${ARCH}/configs/${KERNEL_CONFIG}
     echo "# CONFIG_RMNET_USB is not set" >> ${S}/arch/${ARCH}/configs/${KERNEL_CONFIG}
+
+    cp ${WORKDIR}/kernel/eap-qti-kernel/devicetree/* ${S}/arch/${ARCH}/boot/dts/qcom/
+    echo "#include \"external-modem-pcie.dtsi\"" >> ${S}/arch/${ARCH}/boot/dts/qcom/qcs405.dtsi
 }
 
 addtask do_unpack_extra after do_unpack before do_kernel_metadata
