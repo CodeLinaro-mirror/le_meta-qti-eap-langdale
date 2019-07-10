@@ -2,7 +2,6 @@
 
 MACHINE_FEATURES += "external-ap"
 MACHINE_FEATURES += "wwan-plus-cv2x"
-MACHINEOVERRIDES =. "cv2x:"
 
 BBMASK += "meta-qti-audio/"
 BBMASK += "meta-qti-bsp/recipes-devtools/nanopb-c/nanopb_0.3.8.bb"

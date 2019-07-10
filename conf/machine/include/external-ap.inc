@@ -1,3 +1,8 @@
+# External AP add-on for non-QTI hosts
+
+MACHINE_FEATURES += "external-ap"
+MACHINE_FEATURES += "wwan-plus-cv2x"
+
 DISTRO_FEATURES_remove = "sysvinit"
 
 # Use systemd init manager.
@@ -10,5 +15,3 @@ VIRTUAL-RUNTIME_init_manager = "systemd"
 IMAGE_DEV_MANAGER = "udev"
 IMAGE_INIT_MANAGER = "systemd"
 IMAGE_INITSCRIPTS = ""
-
-MACHINE_FEATURES += "external-ap"
