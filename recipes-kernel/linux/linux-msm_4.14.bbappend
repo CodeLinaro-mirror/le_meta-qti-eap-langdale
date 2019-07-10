@@ -10,6 +10,7 @@ do_unpack_extra () {
     cat ${WORKDIR}/kernel/eap-qti-kernel/defconfig >> ${S}/arch/${ARCH}/configs/${KERNEL_CONFIG}
     echo "# CONFIG_MHI_BUS is not set" >> ${S}/arch/${ARCH}/configs/${KERNEL_CONFIG}
     echo "# CONFIG_QRTR is not set" >> ${S}/arch/${ARCH}/configs/${KERNEL_CONFIG}
+    echo "# CONFIG_RMNET_USB is not set" >> ${S}/arch/${ARCH}/configs/${KERNEL_CONFIG}
 }
 
 addtask do_unpack_extra after do_unpack before do_kernel_metadata
