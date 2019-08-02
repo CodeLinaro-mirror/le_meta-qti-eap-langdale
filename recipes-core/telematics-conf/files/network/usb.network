@@ -1,9 +1,6 @@
 [Match]
-Name=mhi_swip0
+Name=usb*
 
 [Network]
 DHCP=yes
 IPForward=yes
-
-[Link]
-MTUBytes=8192

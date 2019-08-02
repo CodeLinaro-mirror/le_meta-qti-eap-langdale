@@ -1,5 +1,5 @@
 [Match]
-Name=usb0
+Name=mhi_swip*
 
 [Network]
 DHCP=yes
