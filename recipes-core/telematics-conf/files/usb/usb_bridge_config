@@ -37,6 +37,8 @@ PID=0x9FFF
 GADGET_DIR=/sys/kernel/config/usb_gadget
 STRINGS_DIR=strings/0x409
 
+trap "" HUP
+
 print_usage () {
     echo "Usage: $SCRIPT_NAME [options]"
     echo -e "\t-e \"<iface number> ... <iface number>\": Enable listed interfaces"
@@ -114,6 +116,8 @@ else
     if [ -z "$IS_ENABLE" ]; then
         echo $VID > $GADGET_DIR/g1/idVendor
         echo $PID > $GADGET_DIR/g1/idProduct
+    else
+        echo "" > $GADGET_DIR/g1/UDC
     fi
 
     if [ ! -z "$DISCONNECT_ALL" ]; then
@@ -155,7 +159,7 @@ done
 
 # Restart gadget
 IS_ENABLE=$(cat $GADGET_DIR/g1/UDC)
-if [ ! -z "$IS_ENABLE" ];then
+if [ ! -z "$IS_ENABLE" ]; then
     echo "" > UDC
 fi
 echo "$UDC_NAME" > UDC
