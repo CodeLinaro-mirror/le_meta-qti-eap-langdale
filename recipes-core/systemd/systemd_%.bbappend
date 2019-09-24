@@ -11,5 +11,9 @@ ALTERNATIVE_PRIORITY[resolv-conf] ??= "50"
 do_install_append() {
 	if ${@bb.utils.contains('PACKAGECONFIG', 'resolved', 'true', 'false', d)}; then
 		ln -sf ../run/systemd/resolve/resolv.conf ${D}${sysconfdir}/resolv-conf.systemd
-	fi
+        fi
+
+        if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
+	        rm -f ${D}${sysconfdir}/udev/rules.d/mtpserver.rules
+        fi
 }
