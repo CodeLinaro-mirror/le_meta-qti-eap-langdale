@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
+# Copyright (c) 2019, The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are
@@ -27,9 +27,7 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# DESCRIPTION: Setup USB pass through for selected interfaces from host
-# port to device port. E.g. To export interface 0 and 1 of the USB device
-# to the USB host use: "usb_bridge_config 0 1"
+# DESCRIPTION: Setup QTI Debug and QTI MDM Debug bridge USB functions.
 
 SCRIPT_NAME=$0
 VID=0x05C6
@@ -41,9 +39,8 @@ trap "" HUP
 
 print_usage () {
     echo "Usage: $SCRIPT_NAME [options]"
-    echo -e "\t-e \"<iface number> ... <iface number>\": Enable listed interfaces"
-    echo -e "\t-d \"<iface number> ... <iface number>\": Disable listed interfaces"
-    echo -e "\t-D: Disable all interfaces"
+    echo -e "\t-e: Enable debug interfaces"
+    echo -e "\t-d: Disable debug interfaces"
     echo -e "\t-u \"<UDC name>\""
     echo -e "\t-h: Print help"
 }
@@ -54,15 +51,11 @@ if [ $# -eq 0 ]; then
 fi
 
 # Parse arguments
-while getopts ":e:d:u:hD" opt; do
+while getopts ":u:edh" opt; do
     case $opt in
-        e ) ENABLE_LIST=$OPTARG
+        e ) ENABLE=1
                 ;;
-        d ) DISABLE_LIST=$OPTARG
-            DISCONNECT=1
-                ;;
-        D ) DISCONNECT=1
-            DISCONNECT_ALL=1
+        d ) DISABLE=1
                 ;;
         u ) UDC_NAME=$OPTARG
                 ;;
@@ -88,21 +81,10 @@ get_udc () {
 
 disconnect_all () {
     # Remove existing functions
-    rm -rf $GADGET_DIR/g1/configs/c.1/usb_bridge.*
-    rm -rf $GADGET_DIR/g1/functions/usb_bridge.*
+    rm -rf $GADGET_DIR/g1/configs/c.1/diag.*
+    rm -rf $GADGET_DIR/g1/functions/diag.*
 }
 
-disconnect_select () {
-    # Remove listed functions
-    for intf in ${@}; do
-        if [ -L "$GADGET_DIR/g1/configs/c.1/usb_bridge.$intf" ]; then
-            rm -rf $GADGET_DIR/g1/configs/c.1/usb_bridge.$intf
-        fi
-        if [ -d "$GADGET_DIR/g1/functions/usb_bridge.$intf" ]; then
-            rm -rf $GADGET_DIR/g1/functions/usb_bridge.$intf
-        fi
-    done
-}
 
 if [ -z "$UDC_NAME" ]; then
         get_udc
@@ -125,12 +107,8 @@ else
         echo "" > $GADGET_DIR/g1/UDC
     fi
 
-    if [ ! -z "$DISCONNECT_ALL" ]; then
+    if [ ! -z "$DISABLE" ]; then
         disconnect_all
-        echo "$UDC_NAME" > $GADGET_DIR/g1/UDC
-        exit 0
-    elif [ ! -z "$DISCONNECT" ]; then
-        disconnect_select $DISABLE_LIST
         echo "$UDC_NAME" > $GADGET_DIR/g1/UDC
         exit 0
     fi
@@ -147,24 +125,30 @@ fi
 
 if [ ! -d "$GADGET_DIR/g1/configs/c.1" ]; then
     mkdir configs/c.1
-else
-    disconnect_all
 fi
 
-for intf in $ENABLE_LIST; do
-    if [ ! -z $intf ]; then
-        if [ ! -d "$GADGET_DIR/g1/functions/usb_bridge.$intf" ]; then
-            mkdir functions/usb_bridge.$intf
-        fi
-        if [ ! -L "$GADGET_DIR/g1/configs/c.1/usb_bridge.$intf" ]; then
-            ln -s functions/usb_bridge.$intf configs/c.1
-        fi
-    fi
-done
-
-# Restart gadget
+# Disable the gadget to ensure debug interfaces are added
+# after the existing interfaces
 IS_ENABLE=$(cat $GADGET_DIR/g1/UDC)
 if [ ! -z "$IS_ENABLE" ]; then
     echo "" > UDC
 fi
+
+# Enable EAP debug
+if [ ! -d "$GADGET_DIR/g1/functions/diag.diag" ]; then
+    mkdir functions/diag.diag
+fi
+if [ ! -L "$GADGET_DIR/g1/configs/c.1/diag.diag" ]; then
+    ln -s functions/diag.diag configs/c.1
+fi
+
+# Enable MDM debug
+if [ ! -d "$GADGET_DIR/g1/functions/diag.diag_mdm" ]; then
+    mkdir functions/diag.diag_mdm
+fi
+if [ ! -L "$GADGET_DIR/g1/configs/c.1/diag.diag_mdm" ]; then
+    ln -s functions/diag.diag_mdm configs/c.1
+fi
+
+# Enable gadget
 echo "$UDC_NAME" > UDC
