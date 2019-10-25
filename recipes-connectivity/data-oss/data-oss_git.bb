@@ -1,9 +1,12 @@
-inherit qcommon
+inherit autotools-brokensep pkgconfig
 
 DESCRIPTION = "Data Services Open Source"
 LICENSE = "BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/${LICENSE};md5=550794465ba0ec5312d6919e203a55f9"
 
+FILESPATH        =+ "${WORKSPACE}:"
+SRC_URI          = "file://${@d.getVar('SRC_DIR', True).replace('${WORKSPACE}/', '')}"
+PACKAGE_ARCH    ?= "${MACHINE_ARCH}"
 SRC_DIR = "${WORKSPACE}/vendor/qcom/opensource/dataservices"
 S = "${WORKDIR}/vendor/qcom/opensource/dataservices"
 
