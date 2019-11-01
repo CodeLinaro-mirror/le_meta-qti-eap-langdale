@@ -13,7 +13,9 @@ do_unpack_extra () {
     echo "# CONFIG_QTI_QMI_HELPERS is not set" >> ${S}/arch/${ARCH}/configs/${KERNEL_CONFIG}
 
     cp ${WORKDIR}/kernel/eap-qti-kernel/devicetree/* ${S}/arch/${ARCH}/boot/dts/qcom/
-    echo "#include \"external-modem-pcie.dtsi\"" >> ${S}/arch/${ARCH}/boot/dts/qcom/qcs405.dtsi
+    echo "#include \"mdm9150-mhi.dtsi\"" >> ${S}/arch/${ARCH}/boot/dts/qcom/qcs405.dtsi
+    echo "#include \"sa415m-mhi.dtsi\"" >> ${S}/arch/${ARCH}/boot/dts/qcom/qcs405.dtsi
+    echo "#include \"sa515m-mhi.dtsi\"" >> ${S}/arch/${ARCH}/boot/dts/qcom/qcs405.dtsi
 }
 
 addtask do_unpack_extra after do_unpack before do_kernel_metadata
