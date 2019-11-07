@@ -1,4 +1,4 @@
-inherit qcommon cmake
+inherit cmake
 
 SUMMARY = "Telematics SDK stub library"
 DESCRIPTION = "Stub library that can be used to compile telematics applications."
