@@ -11,7 +11,7 @@ PACKAGE_ARCH    ?= "${MACHINE_ARCH}"
 SRC_DIR = "${WORKSPACE}/vendor/qcom/opensource/location/client_api_testapp/"
 S = "${WORKDIR}/vendor/qcom/opensource/location/client_api_testapp"
 
-DEPENDS = "location-client-api"
+DEPENDS = "location-client-api location-integration-api"
 
 EXTRA_OECONF += "${@bb.utils.contains('MACHINE_FEATURES', 'external-ap', '--with-external_ap', '', d)}"
 EXTRA_OECONF += "--with-glib"
