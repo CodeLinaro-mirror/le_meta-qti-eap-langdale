@@ -2,5 +2,5 @@
 Name=usb*
 
 [Network]
-DHCP=yes
+Address=192.168.225.40/24
 IPForward=yes
