@@ -15,6 +15,8 @@ SRC_URI[sha256sum] = "d156d35b83f680e40fd6412c4455fdd03544339779134617b9b28d19e1
 
 inherit cmake
 
+INSANE_SKIP_${PN} += "installed-vs-shipped"
+
 EXTRA_OECMAKE += "-DBUILD_SHARED_LIBS=ON \
                   -DCMAKE_BUILD_TYPE=Release \
                   "
