@@ -33,6 +33,8 @@ SRC_URI = "git://github.com/networkblockdevice/nbd.git"
 SRCREV = "e757bde96ac7a24f2be4e9d025486990ceb910ef"
 
 SRC_URI += "file://0001-Disable-manpages-compilation.patch"
+SRC_URI += "file://nbd_config"
+SRC_URI += "file://nbdserver.service"
 
 S = "${WORKDIR}/git"
 
@@ -54,3 +56,21 @@ EXTRA_OECONF = "--enable-syslog"
 do_configure_prepend() {
     (cd ${S}; ./autogen.sh; cd -)
 }
+
+do_install_append() {
+   if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
+       #Install server config
+       install -d ${D}${sysconfdir}/
+       install -m 0644 ${WORKDIR}/nbd_config ${D}${sysconfdir}/nbd_config
+       #Install systemd service file
+       install -d ${D}${systemd_unitdir}/system
+       install -m 0644 ${WORKDIR}/nbdserver.service ${D}${systemd_unitdir}/system/
+       #Install the service for multi-user.target
+       install -d ${D}${systemd_unitdir}/system/multi-user.target.wants/
+       ln -sf ${systemd_unitdir}/system/nbdserver.service \
+             ${D}${systemd_unitdir}/system/multi-user.target.wants/nbdserver.service
+   fi
+}
+
+FILES_${PN}-server += "${sysconfdir}/* "
+FILES_${PN}-server += "${systemd_unitdir}/system/*"
