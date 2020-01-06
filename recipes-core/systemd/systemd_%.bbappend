@@ -1,3 +1,7 @@
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+
+SRC_URI_append_sa2150p += "file://mask-failed-to-connect-to-journal-render-kvm-groups-and-srv-folder.patch"
+
 PACKAGECONFIG_append += "networkd resolved coredump"
 
 FILES_${PN} += "${sysconfdir}/resolv-conf.systemd"
