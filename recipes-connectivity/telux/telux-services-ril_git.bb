@@ -17,7 +17,7 @@ EXTRA_OECMAKE += "${@bb.utils.contains('MACHINE_FEATURES', 'cv2x-only', '-DMACHI
 
 DEPENDS += "glib-2.0 nanopb protobuf-native python-protobuf-native python-six-native"
 
-SYSTEMD_SERVICE_${PN} = "${@bb.utils.contains('MACHINE_FEATURES', 'cv2x-only', '', 'rild.service', d)}"
+SYSTEMD_SERVICE_${PN} = "${@bb.utils.contains('MACHINE_FEATURES', 'cv2x-only', '', 'rild.service rild2.service', d)}"
 
 do_install_append() {
 # '@LIBDIR@' is a placeholder in rild.service for the lib directory path.
@@ -26,3 +26,5 @@ do_install_append() {
         sed -i -e 's#@LIBDIR@#${libdir}#g' ${D}${systemd_unitdir}/system/rild.service
     fi
 }
+
+FILES_${PN} += "/etc/initscripts/rild_launcher.sh"
