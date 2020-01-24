@@ -1,5 +1,5 @@
 [Match]
-Name=!usb0
+Name=usb*
 
 [Network]
 DHCP=yes
