@@ -19,5 +19,8 @@ do_install_append() {
 
         if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
 	        rm -f ${D}${sysconfdir}/udev/rules.d/mtpserver.rules
+
+                #Use legacy naming for network interfaces
+                ln -sf /dev/null ${D}${sysconfdir}/udev/rules.d/80-net-setup-link.rules
         fi
 }
