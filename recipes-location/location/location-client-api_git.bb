@@ -1,4 +1,5 @@
 inherit autotools-brokensep pkgconfig
+require common-location-defines.inc
 
 DESCRIPTION = "location client api library"
 PR = "r1"
@@ -12,6 +13,3 @@ SRC_DIR = "${WORKSPACE}/vendor/qcom/opensource/location/client_api"
 S = "${WORKDIR}/vendor/qcom/opensource/location/client_api"
 
 DEPENDS = "loc-socket location-hal-daemon-hdr"
-
-EXTRA_OECONF += "${@bb.utils.contains('MACHINE_FEATURES', 'external-ap', '--with-external_ap', '', d)}"
-EXTRA_OECONF += "--with-glib"

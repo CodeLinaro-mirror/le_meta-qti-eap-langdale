@@ -1,4 +1,5 @@
 inherit autotools-brokensep pkgconfig
+require common-location-defines.inc
 
 DESCRIPTION = "GPS Utils"
 PR = "r1"
@@ -12,6 +13,3 @@ SRC_DIR = "${WORKSPACE}/hardware/qcom/gps/utils/"
 S = "${WORKDIR}/hardware/qcom/gps/utils"
 
 DEPENDS = "glib-2.0 loc-pla-hdr location-api-iface"
-
-EXTRA_OECONF += "${@bb.utils.contains('MACHINE_FEATURES', 'external-ap', '--with-external_ap', '', d)}"
-EXTRA_OECONF += "--with-glib"

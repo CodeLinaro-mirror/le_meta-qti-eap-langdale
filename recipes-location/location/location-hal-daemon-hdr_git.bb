@@ -1,4 +1,5 @@
 inherit autotools-brokensep pkgconfig
+require common-location-defines.inc
 
 DESCRIPTION = "location HAL daemon headers"
 LICENSE = "BSD"
