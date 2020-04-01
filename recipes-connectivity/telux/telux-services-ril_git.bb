@@ -14,7 +14,7 @@ S = "${WORKDIR}/telux/services/ril"
 
 EXTRA_OECMAKE += "${@bb.utils.contains('MACHINE_FEATURES', 'external-ap', '-DRIL_FOR_EXTERNAL_AP=ON', '', d)}"
 EXTRA_OECMAKE += "${@bb.utils.contains('MACHINE_FEATURES', 'cv2x-only', '-DMACHINE_HAS_CV2X_ONLY=ON', '', d)}"
-
+EXTRA_OECMAKE += "${@bb.utils.contains('DISTRO_FEATURES', 'deprivileged-user', '-DTELUX_DEPRIVILEGE_ENABLED=ON', '', d)}"
 DEPENDS += "glib-2.0 nanopb protobuf-native python-protobuf-native python-six-native"
 
 SYSTEMD_SERVICE_${PN} = "${@bb.utils.contains('MACHINE_FEATURES', 'cv2x-only', '', 'rild.service rild2.service', d)}"
