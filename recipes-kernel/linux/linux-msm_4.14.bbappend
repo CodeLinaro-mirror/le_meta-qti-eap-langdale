@@ -1,3 +1,13 @@
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-${PV}:"
+
+SRC_URI_append_sa2150p += "file://0001-Modify-the-wakeup-APIs-in-compatible-with-msm-4.14.patch"
+
+do_patch_sa2150p () {
+      cd ${S}/
+      patch -p1 < ${WORKDIR}/0001-Modify-the-wakeup-APIs-in-compatible-with-msm-4.14.patch
+      cd -
+}
+
 do_unpack_extra () {
     cp -r ${WORKDIR}/kernel/eap-qti-kernel/* ${S}/
     echo "source \"drivers/qti/Kconfig\"" >> ${S}/drivers/Kconfig
