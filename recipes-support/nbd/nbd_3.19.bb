@@ -66,9 +66,10 @@ do_install_append() {
        install -d ${D}${systemd_unitdir}/system
        install -m 0644 ${WORKDIR}/nbdserver.service ${D}${systemd_unitdir}/system/
        #Install the service for multi-user.target
-       install -d ${D}${systemd_unitdir}/system/multi-user.target.wants/
-       ln -sf ${systemd_unitdir}/system/nbdserver.service \
-             ${D}${systemd_unitdir}/system/multi-user.target.wants/nbdserver.service
+       # Disable launching of nbd service by default
+       #install -d ${D}${systemd_unitdir}/system/multi-user.target.wants/
+       #ln -sf ${systemd_unitdir}/system/nbdserver.service \
+       #      ${D}${systemd_unitdir}/system/multi-user.target.wants/nbdserver.service
    fi
 }
 
