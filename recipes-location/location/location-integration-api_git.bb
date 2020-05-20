@@ -13,4 +13,4 @@ PACKAGE_ARCH    ?= "${MACHINE_ARCH}"
 SRC_URI = "file://vendor/qcom/opensource/location/integration_api/"
 S = "${WORKDIR}/vendor/qcom/opensource/location/integration_api"
 
-DEPENDS = "loc-socket location-hal-daemon-hdr"
+DEPENDS = "loc-socket location-api-msg-proto"

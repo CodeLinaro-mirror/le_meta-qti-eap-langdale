@@ -12,4 +12,4 @@ PACKAGE_ARCH    ?= "${MACHINE_ARCH}"
 SRC_DIR = "${WORKSPACE}/vendor/qcom/opensource/location/client_api"
 S = "${WORKDIR}/vendor/qcom/opensource/location/client_api"
 
-DEPENDS = "loc-socket location-hal-daemon-hdr"
+DEPENDS = "loc-socket location-api-msg-proto"
