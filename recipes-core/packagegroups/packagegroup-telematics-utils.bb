@@ -6,6 +6,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit packagegroup
 
+RDEPENDS_${PN}_sa2150p += "android-tools"
 RDEPENDS_${PN} += "chrony"
 RDEPENDS_${PN} += "chronyc"
 RDEPENDS_${PN} += "dnsmasq"
