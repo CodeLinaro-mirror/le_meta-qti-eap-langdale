@@ -30,3 +30,7 @@ do_unpack_extra () {
 }
 
 addtask do_unpack_extra after do_unpack before do_kernel_metadata
+
+# Including the file depends on machine
+INCSUFFIX = "${@bb.utils.contains('MACHINE', 'sa2150p', 'sa2150p-image', 'none',d)}"
+include linux-msm-4.14/${MACHINE}/${INCSUFFIX}.inc
