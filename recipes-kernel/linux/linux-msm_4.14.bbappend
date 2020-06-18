@@ -26,6 +26,7 @@ do_unpack_extra () {
     echo "#include \"mdm9150-mhi.dtsi\"" >> ${S}/arch/${ARCH}/boot/dts/qcom/qcs405.dtsi
     echo "#include \"sa415m-mhi.dtsi\"" >> ${S}/arch/${ARCH}/boot/dts/qcom/qcs405.dtsi
     echo "#include \"sa515m-mhi.dtsi\"" >> ${S}/arch/${ARCH}/boot/dts/qcom/qcs405.dtsi
+    echo "#include \"eap_diag.dtsi\"" >> ${S}/arch/${ARCH}/boot/dts/qcom/qcs405.dtsi
 }
 
 addtask do_unpack_extra after do_unpack before do_kernel_metadata
