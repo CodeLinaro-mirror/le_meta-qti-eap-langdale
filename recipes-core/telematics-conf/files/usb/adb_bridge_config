@@ -29,17 +29,37 @@
 #
 # DESCRIPTION: Add MDM ADB to EAP USB bridge.
 
+MDM_COMP=$(lsusb | grep 05c6 | cut -d':' -f3 | cut -d' ' -f1)
+if [ -z "$MDM_COMP" ]; then
+    echo "MDM not found. Exiting..."
+    exit 1
+fi
+
+case $MDM_COMP in
+    9102)
+        ADB_INTERFACE=8
+        ;;
+    9104)
+        ADB_INTERFACE=3
+        ;;
+    9106)
+        ADB_INTERFACE=7
+        ;;
+    910A)
+        ADB_INTERFACE=7
+        ;;
+    910C)
+        ADB_INTERFACE=6
+        ;;
+    *)
+        echo "MDM Composition not supported"
+        exit 1
+        ;;
+esac
+
 # Change composition to 9008 (disables EAP ADB)
 usb_composition 9008 n n y n
 sleep 2
-
-# Disable any USB bridges
 echo "" > /sys/kernel/config/usb_gadget/g1/UDC
 sleep 2
-
-# Enable 9102 composition in usb_bridge driver
-echo "05c6 9102" > /sys/bus/usb/drivers/usb_bridge/new_id
-sleep 2
-
-# Bridge the MDM ADB interface (9102)
-usb_bridge_config -e 8
+usb_bridge_config -e $ADB_INTERFACE
