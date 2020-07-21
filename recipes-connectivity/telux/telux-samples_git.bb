@@ -17,9 +17,14 @@ FILES_${PN} += "${systemd_unitdir}"
 EXTRA_OECMAKE += "${@bb.utils.contains('DISTRO_FEATURES', 'systemd', '-DWITH_SYSTEMD:BOOL=ON', '', d)}"
 EXTRA_OECMAKE += "${@bb.utils.contains('MACHINE_FEATURES', 'cv2x-only', '-DMACHINE_HAS_CV2X_ONLY=ON', '', d)} "
 EXTRA_OECMAKE += "${@bb.utils.contains('MACHINE_FEATURES', 'wwan-plus-cv2x', '-DMACHINE_HAS_CV2X=ON', '', d)} "
+EXTRA_OECMAKE += "-DAUDIO_ENABLED=ON"
 
 SYSTEMD_SERVICE_${PN} = "${@bb.utils.contains('MACHINE_FEATURES', 'pps', 'chrony-sock.service', '', d)}"
 
 SRCREV = "${AUTOREV}"
 
 DEPENDS += "telux telux-lib systemd"
+
+do_install_append() {
+    install -m 0644 ${WORKDIR}/telux/public/apps/tests/telsdk_console_app/config_files/telsdk_app.conf -D ${D}${sysconfdir}/telsdk_app.conf
+}
