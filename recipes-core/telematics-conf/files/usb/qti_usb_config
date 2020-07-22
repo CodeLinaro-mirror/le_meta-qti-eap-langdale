@@ -81,8 +81,8 @@ get_udc () {
 
 disconnect_all () {
     # Remove existing functions
-    rm -rf $GADGET_DIR/g1/configs/c.1/diag.*
-    rm -rf $GADGET_DIR/g1/functions/diag.*
+    rm -rf $GADGET_DIR/g1/configs/c.1/*diag*
+    rm -rf $GADGET_DIR/g1/functions/*diag*
 }
 
 
