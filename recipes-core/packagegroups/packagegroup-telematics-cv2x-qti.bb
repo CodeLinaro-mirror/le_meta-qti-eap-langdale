@@ -6,4 +6,5 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit packagegroup
 
-# Open source packages (placeholder)
+# Open source packages
+RDEPENDS_${PN}_append_sa2150p += "compensator-daemon"
