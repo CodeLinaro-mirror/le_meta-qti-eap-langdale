@@ -14,6 +14,8 @@ S = "${WORKDIR}/vendor/qcom/opensource/rf-compensator/"
 
 FILES_${PN} += "${systemd_unitdir}"
 
+DEPENDS = "telux-lib"
+
 SYSTEMD_SERVICE_${PN} = "compensator.service"
 SYSTEMD_AUTO_ENABLE = "enable"
 
