@@ -14,7 +14,6 @@ S = "${WORKDIR}/vendor/qcom/opensource/location/utils/loc_socket"
 
 DEPENDS = "virtual/kernel gps-utils qmi-framework"
 
-EXTRA_OECONF += "--enable-kernel-qrtr=yes"
 CPPFLAGS += "-I${STAGING_KERNEL_BUILDDIR}/usr/include"
 
 SOLIBS = ".so*"
