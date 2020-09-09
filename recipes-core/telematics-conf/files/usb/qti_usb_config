@@ -143,13 +143,11 @@ if [ ! -L "$GADGET_DIR/g1/configs/c.1/diag.diag" ]; then
 fi
 
 # Enable MDM debug
-if [ ! -d "$GADGET_DIR/g1/functions/mdm_data.diag" ]; then
-    mkdir functions/mdm_data.diag
-    echo 1 > functions/mdm_data.diag/in_ep
-    echo 1 > functions/mdm_data.diag/out_ep
+if [ ! -d "$GADGET_DIR/g1/functions/diag.diag_mdm" ]; then
+    mkdir functions/diag.diag_mdm
 fi
-if [ ! -L "$GADGET_DIR/g1/configs/c.1/mdm_data.diag" ]; then
-    ln -s functions/mdm_data.diag configs/c.1
+if [ ! -L "$GADGET_DIR/g1/configs/c.1/diag.diag_mdm" ]; then
+    ln -s functions/diag.diag_mdm configs/c.1
 fi
 
 # Enable gadget
