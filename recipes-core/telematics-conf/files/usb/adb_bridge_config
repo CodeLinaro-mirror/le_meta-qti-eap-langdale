@@ -29,6 +29,8 @@
 #
 # DESCRIPTION: Add MDM ADB to EAP USB bridge.
 
+trap "" HUP
+
 MDM_COMP=$(lsusb | grep 05c6 | cut -d':' -f3 | cut -d' ' -f1)
 if [ -z "$MDM_COMP" ]; then
     echo "MDM not found. Exiting..."
