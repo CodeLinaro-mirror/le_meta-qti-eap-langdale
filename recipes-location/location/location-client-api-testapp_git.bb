@@ -12,4 +12,5 @@ PACKAGE_ARCH    ?= "${MACHINE_ARCH}"
 SRC_DIR = "${WORKSPACE}/vendor/qcom/opensource/location/client_api_testapp/"
 S = "${WORKDIR}/vendor/qcom/opensource/location/client_api_testapp"
 
-DEPENDS = "location-client-api location-integration-api"
+DEPENDS = "location-client-api location-integration-api gps-utils"
+EXTRA_OECONF += "--with-core-includes=${WORKSPACE}/system/core/include"
