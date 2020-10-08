@@ -10,3 +10,13 @@ do_generate_rootfs_fsconfig_append() {
         fi
     fi
 }
+
+IMAGE_PREPROCESS_COMMAND_prepend = " do_generate_usrfs_fsconfig; "
+
+do_generate_usrfs_fsconfig() {
+   if ${@bb.utils.contains('IMAGE_FSTYPES', 'ext4', 'true', 'false', d)}; then
+      if [ -e ${COREBASE}/meta-qti-eap/recipes-core/images/${MACHINE}/${MACHINE}-usrfs-fsconfig.conf ]; then
+           cp -f ${COREBASE}/meta-qti-eap/recipes-core/images/${MACHINE}/${MACHINE}-usrfs-fsconfig.conf ${WORKDIR}/usrfs_fsconfig.conf
+      fi
+   fi
+}
