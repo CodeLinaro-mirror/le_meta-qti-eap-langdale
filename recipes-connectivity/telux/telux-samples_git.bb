@@ -18,6 +18,10 @@ EXTRA_OECMAKE += "${@bb.utils.contains('DISTRO_FEATURES', 'systemd', '-DWITH_SYS
 EXTRA_OECMAKE += "${@bb.utils.contains('MACHINE_FEATURES', 'cv2x-only', '-DMACHINE_HAS_CV2X_ONLY=ON', '', d)} "
 EXTRA_OECMAKE += "${@bb.utils.contains('MACHINE_FEATURES', 'wwan-plus-cv2x', '-DMACHINE_HAS_CV2X=ON', '', d)} "
 EXTRA_OECMAKE += "-DAUDIO_ENABLED=ON"
+# Flag to identify an External Application Processor(EAP)
+EXTRA_OECMAKE += "${@bb.utils.contains('MACHINE_FEATURES', 'external-ap', '-DTELUX_FOR_EXTERNAL_AP=ON', '', d)}"
+# Flag to identify an External Application Processor(EAP) of Qualcomm Technologies, Inc.
+EXTRA_OECMAKE += "${@bb.utils.contains('MACHINE_FEATURES', 'qti-external-ap', '-DTELUX_QTI_EXTERNAL_AP=ON', '', d)}"
 
 SYSTEMD_SERVICE_${PN} = "${@bb.utils.contains('MACHINE_FEATURES', 'pps', 'chrony-sock.service', '', d)}"
 
