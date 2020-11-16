@@ -1,6 +1,7 @@
 # External AP add-on to SA2150P
 
 MACHINE_FEATURES += "external-ap"
+MACHINE_FEATURES += "qti-external-ap"
 MACHINE_FEATURES += "wwan-plus-cv2x"
 MACHINE_FEATURES += "diag"
 MACHINE_FEATURES += "pps"
