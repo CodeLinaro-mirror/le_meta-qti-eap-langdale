@@ -29,8 +29,9 @@ EXTRA_OECMAKE += "${@bb.utils.contains('MACHINE_FEATURES', 'qti-external-ap', '-
 
 SYSTEMD_SERVICE_${PN} = "${@bb.utils.contains('MACHINE_FEATURES', 'pps', 'chrony-sock.service', '', d)}"
 
-DEPENDS += "telux telux-lib systemd v2x-lib"
+DEPENDS += "telux telux-lib systemd"
 DEPENDS += "${@bb.utils.contains('MACHINE_FEATURES', 'qti-external-ap', 'aerolink', '',d)}"
+DEPENDS += "${@bb.utils.contains('MACHINE_FEATURES', 'qti-external-ap', 'aerolink-headers', '',d)}"
 
 do_install_append() {
     install -m 0644 ${WORKDIR}/telux/public/apps/tests/telsdk_console_app/config_files/telsdk_app.conf -D ${D}${sysconfdir}/telsdk_app.conf
