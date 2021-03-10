@@ -29,7 +29,7 @@ EXTRA_OECMAKE += "${@bb.utils.contains('MACHINE_FEATURES', 'qti-external-ap', '-
 
 SYSTEMD_SERVICE_${PN} = "${@bb.utils.contains('MACHINE_FEATURES', 'pps', 'chrony-sock.service', '', d)}"
 
-DEPENDS += "telux telux-lib systemd"
+DEPENDS += "telux telux-lib systemd curl"
 DEPENDS += "${@bb.utils.contains('MACHINE_FEATURES', 'qti-external-ap', 'aerolink', '',d)}"
 DEPENDS += "${@bb.utils.contains('MACHINE_FEATURES', 'qti-external-ap', 'aerolink-headers', '',d)}"
 
