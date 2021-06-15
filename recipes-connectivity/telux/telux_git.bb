@@ -12,6 +12,8 @@ PACKAGE_ARCH    ?= "${MACHINE_ARCH}"
 SRC_DIR = "${WORKSPACE}/telux/public/include"
 S = "${WORKDIR}/telux/public/include"
 
+RDEPENDS_${PN} += "glib-2.0"
+
 SRCREV = "${AUTOREV}"
 
 ALLOW_EMPTY_${PN} = "1"
