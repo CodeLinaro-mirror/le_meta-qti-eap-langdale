@@ -36,3 +36,6 @@ DEPENDS += "${@bb.utils.contains('MACHINE_FEATURES', 'qti-external-ap', 'aerolin
 do_install_append() {
     install -m 0644 ${WORKDIR}/telux/public/apps/tests/telsdk_console_app/config_files/telsdk_app.conf -D ${D}${sysconfdir}/telsdk_app.conf
 }
+
+FILES_SOLIBSDEV = ""
+FILES_${PN} += "${libdir}/*.so"
