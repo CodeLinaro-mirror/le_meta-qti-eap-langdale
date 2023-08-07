@@ -3,7 +3,6 @@
 require ${COREBASE}/meta/conf/distro/include/security_flags.inc
 
 MACHINE_FEATURES += "external-ap"
-MACHINE_FEATURES += "wwan-plus-cv2x"
 MACHINE_FEATURES += "diag"
 
 DISTRO_FEATURES_remove = "sysvinit"
