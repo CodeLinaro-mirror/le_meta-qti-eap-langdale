@@ -1,1 +1,1 @@
-PACKAGECONFIG_class-native_append = " libusb"
+PACKAGECONFIG_class-native:append = " libusb"

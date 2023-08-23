@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = " \
     file://${COMMON_LICENSE_DIR}/BSD-3-Clause;md5=550794465ba0ec5312d6919e203a55f9 \
 "
 DEPENDS = "libbsd libpcre zlib libcap"
-DEPENDS_append_class-target = " openssl"
+DEPENDS:append_class-target = " openssl"
 
 ANDROID_MIRROR = "android.googlesource.com"
 OPENEMBEDDED_FILES = "https://github.com/openembedded/meta-openembedded/raw/thud/meta-oe/recipes-devtools/android-tools/android-tools"
@@ -64,8 +64,8 @@ ARM_INSTRUCTION_SET_armv4 = "arm"
 ARM_INSTRUCTION_SET_armv5 = "arm"
 
 # Find libbsd headers during native builds
-CC_append_class-native = " -I${STAGING_INCDIR}"
-CC_append_class-nativesdk = " -I${STAGING_INCDIR}"
+CC:append_class-native = " -I${STAGING_INCDIR}"
+CC:append_class-nativesdk = " -I${STAGING_INCDIR}"
 
 TOOLS = "adb fastboot"
 
@@ -141,7 +141,7 @@ do_install() {
 
 PACKAGES += "${PN}-fstools"
 
-FILES_${PN}-fstools = "\
+FILES:${PN}-fstools = "\
     ${bindir}/ext2simg \
     ${bindir}/ext4fixup \
     ${bindir}/img2simg \

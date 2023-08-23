@@ -20,4 +20,4 @@ do_install() {
 }
 
 PACKAGES = "${PN}"
-FILES_${PN} += "/usr/include/*"
+FILES:${PN} += "/usr/include/*"

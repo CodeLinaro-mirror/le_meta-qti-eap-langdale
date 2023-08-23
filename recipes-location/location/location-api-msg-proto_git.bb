@@ -12,9 +12,9 @@ S = "${WORKDIR}/vendor/qcom/opensource/location/location_api_msg_proto"
 
 DEPENDS = "glib-2.0 protobuf protobuf-native loc-pla-hdr gps-utils"
 
-FILES_${PN} += "${libdir}/*"
+FILES:${PN} += "${libdir}/*"
 
-do_compile_prepend () {
+do_compile:prepend () {
     echo "Running location_api_msg_protobuf_gen.sh"
     cd ${S}
     ./location_api_msg_protobuf_gen.sh

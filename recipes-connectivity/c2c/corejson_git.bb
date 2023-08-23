@@ -11,8 +11,8 @@ PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
 FILESPATH =+ "${WORKSPACE}:"
 
-SRC_URI = "file://c2c/external/FreeRTOS/coreJSON"
-S = "${WORKDIR}/c2c/external/FreeRTOS/coreJSON"
+#SRC_URI = "file://c2c/external/FreeRTOS/coreJSON"
+#S = "${WORKDIR}/c2c/external/FreeRTOS/coreJSON"
 
 SOLIBS = ".so*"
 FILES_SOLIBSDEV = ""

@@ -11,8 +11,8 @@ PACKAGE_ARCH ?= "${MACHINE_ARCH}"
 
 FILESPATH =+ "${WORKSPACE}:"
 
-SRC_URI = "file://c2c/external/FreeRTOS/coreMQTT"
-S = "${WORKDIR}/c2c/external/FreeRTOS/coreMQTT"
+#SRC_URI = "file://c2c/external/FreeRTOS/coreMQTT"
+#S = "${WORKDIR}/c2c/external/FreeRTOS/coreMQTT"
 
 SOLIBS = ".so*"
 FILES_SOLIBSDEV = ""

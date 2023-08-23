@@ -42,9 +42,9 @@ inherit autotools pkgconfig
 
 PACKAGES = "${PN}-client ${PN}-server ${PN}-dbg ${PN}-trdump ${PN}-doc"
 
-FILES_${PN}-client = "${sbindir}/${BPN}-client"
-FILES_${PN}-server = "${bindir}/${BPN}-server"
-FILES_${PN}-trdump = "${bindir}/${BPN}-trdump"
+FILES:${PN}-client = "${sbindir}/${BPN}-client"
+FILES:${PN}-server = "${bindir}/${BPN}-server"
+FILES:${PN}-trdump = "${bindir}/${BPN}-trdump"
 
 ALTERNATIVE_${PN} = "nbd-client"
 ALTERNATIVE_TARGET[nbd-client] = "${base_sbindir}/nbd-client.${BPN}"
@@ -53,11 +53,11 @@ ALTERNATIVE_PRIORITY = "100"
 
 EXTRA_OECONF = "--enable-syslog"
 
-do_configure_prepend() {
+do_configure:prepend() {
     (cd ${S}; ./autogen.sh; cd -)
 }
 
-do_install_append() {
+do_install:append() {
    if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
        #Install server config
        install -d ${D}${sysconfdir}/
@@ -73,5 +73,5 @@ do_install_append() {
    fi
 }
 
-FILES_${PN}-server += "${sysconfdir}/* "
-FILES_${PN}-server += "${systemd_unitdir}/system/*"
+FILES:${PN}-server += "${sysconfdir}/* "
+FILES:${PN}-server += "${systemd_unitdir}/system/*"

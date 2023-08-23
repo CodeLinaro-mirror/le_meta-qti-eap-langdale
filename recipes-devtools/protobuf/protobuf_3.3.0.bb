@@ -9,8 +9,10 @@ LICENSE = "BSD-3-Clause"
 PACKAGE_BEFORE_PN = "${PN}-compiler"
 
 DEPENDS = "zlib"
-RDEPENDS_${PN}-compiler = "${PN}"
-RDEPENDS_${PN}-dev += "${PN}-compiler"
+RDEPENDS:${PN}-compiler = "${PN}"
+RDEPENDS:${PN}-dev += "${PN}-compiler"
+
+SRC_URI[sha256sum] = "1cbcee2c45773f57cb6de7ee0eceb97f92b9b69c0178305509b162c0160c1f04"
 
 LIC_FILES_CHKSUM = "file://LICENSE;md5=35953c752efc9299b184f91bef540095"
 
@@ -26,7 +28,7 @@ inherit autotools-brokensep
 
 S = "${WORKDIR}/git"
 
-FILES_${PN}-compiler = "${bindir} ${libdir}/libprotoc${SOLIBS}"
+FILES:${PN}-compiler = "${bindir} ${libdir}/libprotoc${SOLIBS}"
 
 MIPS_INSTRUCTION_SET = "mips"
 

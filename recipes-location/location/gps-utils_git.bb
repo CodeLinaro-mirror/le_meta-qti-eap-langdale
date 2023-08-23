@@ -14,7 +14,7 @@ S = "${WORKDIR}/hardware/qcom/gps/utils"
 
 DEPENDS = "glib-2.0 loc-pla-hdr location-api-iface"
 
-do_install_append() {
+do_install:append() {
     #Install gps.conf file
     install -m 0644 -D ${WORKDIR}/hardware/qcom/gps/etc/gps.conf ${D}${sysconfdir}/gps.conf
 }

@@ -9,10 +9,10 @@ SRC_URI += "file://system"
 SRC_URI += "file://udev"
 SRC_URI += "file://usb"
 
-FILES_${PN} += "${sysconfdir}"
-FILES_${PN} += "${sbindir}"
+FILES:${PN} += "${sysconfdir}"
+FILES:${PN} += "${sbindir}"
 
-SYSTEMD_SERVICE_${PN} = "iptables-masquerade.service"
+SYSTEMD_SERVICE:${PN} = "iptables-masquerade.service"
 
 do_install() {
     install -d ${D}${sysconfdir}/systemd/network

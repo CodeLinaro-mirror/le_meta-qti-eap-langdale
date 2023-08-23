@@ -10,7 +10,7 @@ SRCNAME = "protobuf"
 
 PACKAGE_BEFORE_PN = "${PN}-compiler"
 
-DEPENDS = "zlib python-setuptools-native python-native protobuf-native"
+DEPENDS = "zlib python3-setuptools-native python3-native protobuf-native"
 
 LIC_FILES_CHKSUM = "file://setup.py;begineline=237;endline=237;md5=280e00a114b06867a5b7ec32779b6c61"
 
@@ -24,7 +24,7 @@ S = "${WORKDIR}/git/python"
 
 BBCLASSEXTEND = "native nativesdk"
 
-inherit distutils
+inherit pypi setuptools3_legacy 
 
 # The installer doesn't seem to add path to protobuf. Correct it.
 # Cherry-pick the files after the `setup.py install` and copy them to ${D}.

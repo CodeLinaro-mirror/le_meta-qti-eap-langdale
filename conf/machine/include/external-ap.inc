@@ -3,12 +3,13 @@
 require ${COREBASE}/meta/conf/distro/include/security_flags.inc
 
 MACHINE_FEATURES += "external-ap"
+MACHINE_FEATURES += "wwan-plus-cv2x"
 MACHINE_FEATURES += "diag"
 
-DISTRO_FEATURES_remove = "sysvinit"
+DISTRO_FEATURES:remove = "sysvinit"
 
 # Use systemd init manager.
-DISTRO_FEATURES_append = " systemd"
+DISTRO_FEATURES:append = " systemd"
 DISTRO_FEATURES_BACKFILL_CONSIDERED += "sysvinit"
 VIRTUAL-RUNTIME_dev_manager = "udev"
 VIRTUAL-RUNTIME_init_manager = "systemd"

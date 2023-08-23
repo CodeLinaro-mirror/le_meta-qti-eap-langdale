@@ -1,6 +1,6 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-${PV}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}-${PV}:"
 
-SRC_URI_append_sa2150p += "file://0001-Modify-the-wakeup-APIs-in-compatible-with-msm-4.14.patch"
+SRC_URI:append_sa2150p += "file://0001-Modify-the-wakeup-APIs-in-compatible-with-msm-4.14.patch"
 
 do_patch_sa2150p () {
       cd ${S}/

@@ -9,22 +9,24 @@ inherit packagegroup
 # Open source packages
 
 ##### Data component #####
-RDEPENDS_${PN} += "data-oss"
+RDEPENDS:${PN} += "data-oss"
 ##### Location component #####
-#RDEPENDS_${PN} += "gps-utils"
+#RDEPENDS:${PN} += "gps-utils"
 ##### TelSDK component #####
-RDEPENDS_${PN} += "telux"
-RDEPENDS_${PN} += "telux-lib"
-#RDEPENDS_${PN} += "telux-samples"
+RDEPENDS:${PN} += "telux"
+RDEPENDS:${PN} += "telux-lib"
+RDEPENDS:${PN} += "telux-samples"
 ##### Misc packages #####
-RDEPENDS_${PN} += "telematics-conf"
+RDEPENDS:${PN} += "telematics-conf"
+
+RDEPENDS:${PN} += "rsync"
 
 ##### Packages with QTI dependencies #####
-#RDEPENDS_${PN} += "${@oe.utils.conditional('WITH_PROP_LAYER', 'yes', 'loc-socket', '', d)}"
-#RDEPENDS_${PN} += "${@oe.utils.conditional('WITH_PROP_LAYER', 'yes', 'location-client-api', '', d)}"
-#RDEPENDS_${PN} += "${@oe.utils.conditional('WITH_PROP_LAYER', 'yes', 'location-client-api-testapp', '', d)}"
-#RDEPENDS_${PN} += "${@oe.utils.conditional('WITH_PROP_LAYER', 'yes', 'location-integration-api', '', d)}"
+#RDEPENDS:${PN} += "${@oe.utils.conditional('WITH_PROP_LAYER', 'yes', 'loc-socket', '', d)}"
+#RDEPENDS:${PN} += "${@oe.utils.conditional('WITH_PROP_LAYER', 'yes', 'location-client-api', '', d)}"
+#RDEPENDS:${PN} += "${@oe.utils.conditional('WITH_PROP_LAYER', 'yes', 'location-client-api-testapp', '', d)}"
+#RDEPENDS:${PN} += "${@oe.utils.conditional('WITH_PROP_LAYER', 'yes', 'location-integration-api', '', d)}"
 
 # Target SDK Packages
-#TOOLCHAIN_TARGET_TASK_append_sa2150p += "telux"
-#TOOLCHAIN_TARGET_TASK_append_sa2150p += "loc-pla-hdr"
+#TOOLCHAIN_TARGET_TASK:append_sa2150p += "telux"
+#TOOLCHAIN_TARGET_TASK:append_sa2150p += "loc-pla-hdr"
