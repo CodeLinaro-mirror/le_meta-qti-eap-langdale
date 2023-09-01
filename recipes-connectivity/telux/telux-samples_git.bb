@@ -1,41 +1,53 @@
-inherit pkgconfig cmake systemd
-
 SUMMARY = "Telematics SDK Samples"
 DESCRIPTION = "Telematics SDK Samples"
-
 LICENSE = "BSD-3-Clause & BSD-2-Clause"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/BSD-3-Clause;md5=550794465ba0ec5312d6919e203a55f9 \
    file://${WORKDIR}/telux/public/asn1c/LICENSE;md5=ee8bfaaa7d71cf3edb079475e6716d4b"
 
-FILESPATH        =+ "${WORKSPACE}:"
-SRC_URI          = "\
+DEPENDS += "telux telux-lib systemd curl canwrapper json-c"
+
+DEPENDS += " ${@bb.utils.contains_any('MACHINE_FEATURES', [ 'qti-cv2x', 'qti-wwan-plus-cv2x' ], 'aerolink aerolink-headers', '', d)} "
+
+DEPENDS += "${@bb.utils.contains_any('MACHINE_FEATURES', 'qti-wwan-plus-cv2x qti-cv2x', 'v2x-lib', '', d)}"
+
+DEPENDS:remove += "${@bb.utils.contains('MACHINE_FEATURES', 'external-ap', 'canwrapper', '',d)}"
+
+SRC_URI = "\
     git://github.com/vlm/asn1c;name=asn1c;protocol=https;nobranch=1;tag=94f0b645d401f75b5b1aa8e5440dc2df0f916517;destsuffix=telux/public/asn1c\
-    file://${@d.getVar('SRC_DIR', True).replace('${WORKSPACE}/', '')}"
-PACKAGE_ARCH    ?= "${MACHINE_ARCH}"
-SRC_DIR = "${WORKSPACE}/telux/public/"
+    file://telux/public \
+    file://telux_power_refd.service \
+    "
+
 S = "${WORKDIR}/telux/public/samples"
+SYSTEMD_SERVICE_${PN} = "${@bb.utils.contains_any('MACHINE_FEATURES', ['pps', 'qti-location'], 'chrony-sock.service', '', d)}"
+SYSTEMD_SERVICE_${PN}:remove += "${@bb.utils.contains_any('MACHINE_FEATURES', 'qti-vm-fota external-ap', 'chrony-sock.service', '', d)}"
 
-FILES_${PN} += "${systemd_unitdir}"
-EXTRA_OECMAKE += "-DASN1C_PATH=${WORKDIR}/telux/public/asn1c"
-EXTRA_OECMAKE += "${@bb.utils.contains('DISTRO_FEATURES', 'systemd', '-DWITH_SYSTEMD:BOOL=ON', '', d)}"
-EXTRA_OECMAKE += "${@bb.utils.contains('MACHINE_FEATURES', 'cv2x-only', '-DMACHINE_HAS_CV2X_ONLY=ON', '', d)} "
-EXTRA_OECMAKE += "${@bb.utils.contains('MACHINE_FEATURES', 'wwan-plus-cv2x', '-DMACHINE_HAS_CV2X=ON', '', d)} "
-EXTRA_OECMAKE += "-DAUDIO_ENABLED=ON"
-# Flag to identify an External Application Processor(EAP)
-EXTRA_OECMAKE += "${@bb.utils.contains('MACHINE_FEATURES', 'external-ap', '-DTELUX_FOR_EXTERNAL_AP=ON', '', d)}"
-# Flag to identify an External Application Processor(EAP) of Qualcomm Technologies, Inc.
-EXTRA_OECMAKE += "${@bb.utils.contains('MACHINE_FEATURES', 'qti-external-ap', '-DTELUX_QTI_EXTERNAL_AP=ON', '', d)}"
-EXTRA_OECMAKE += "${@bb.utils.contains('MACHINE_FEATURES', 'qti-external-ap', '-DWITH_AEROLINK=ON', '', d)}"
+inherit pkgconfig cmake systemd
 
-SYSTEMD_SERVICE_${PN} = "${@bb.utils.contains('MACHINE_FEATURES', 'pps', 'chrony-sock.service', '', d)}"
+EXTRA_OECMAKE = " \
+    -DASN1C_PATH=${WORKDIR}/telux/public/asn1c \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', '-DWITH_SYSTEMD:BOOL=ON', '', d)} \
+    -DAUDIO_ENABLED=ON \
+    ${@bb.utils.contains('MACHINE_FEATURES', 'qti-vm-guest', '-DTELSDK_FEATURE_FOR_SECONDARY_VM=ON', '', d)} \
+    ${@bb.utils.contains('MACHINE_FEATURES', 'external-ap', '-DTELUX_FOR_EXTERNAL_AP=ON', '', d)} \
+    ${@bb.utils.contains('MACHINE_FEATURES', 'qti-external-ap', '-DTELUX_QTI_EXTERNAL_AP=ON', '', d)} \
+    ${@bb.utils.contains('MACHINE_FEATURES', 'qti-cv2x', '-DMACHINE_HAS_CV2X_ONLY=ON', '', d)} \
+    ${@bb.utils.contains('MACHINE_FEATURES', 'qti-wwan-plus-cv2x', '-DMACHINE_HAS_CV2X=ON', '', d)} \
+    ${@bb.utils.contains_any('MACHINE_FEATURES', [ 'qti-cv2x', 'qti-wwan-plus-cv2x' ], '-DWITH_AEROLINK=ON', '', d)} \
+    ${@bb.utils.contains_any('MACHINE_FEATURES', ['qti-location','pps'], '-DWITH_LOCATION=ON', '', d)} \
+    ${@bb.utils.contains_any('MACHINE_FEATURES', ['qti-vm-host','qti-vm-guest'], '', '-DTELSDK_FEATURE_FOR_PVM_ONLY=ON', d)} \
+"
 
-DEPENDS += "telux telux-lib systemd"
-DEPENDS += "${@bb.utils.contains('MACHINE_FEATURES', 'qti-external-ap', 'aerolink', '',d)}"
-DEPENDS += "${@bb.utils.contains('MACHINE_FEATURES', 'qti-external-ap', 'aerolink-headers', '',d)}"
-
-do_install_append() {
+do_install:append() {
     install -m 0644 ${WORKDIR}/telux/public/apps/tests/telsdk_console_app/config_files/telsdk_app.conf -D ${D}${sysconfdir}/telsdk_app.conf
+    if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
+        if ${@bb.utils.contains_any('MACHINE_FEATURES', 'qti-vm-guest external-ap', 'false', 'true', d)}; then
+            install -m 0644 ${WORKDIR}/telux_power_refd.service -D ${D}${systemd_unitdir}/system/telux_power_refd.service
+        fi
+    fi
 }
 
+FILESPATH =+ "${WORKSPACE}:"
+FILES_${PN} += "${systemd_unitdir}"
 FILES_SOLIBSDEV = ""
 FILES_${PN} += "${libdir}/*.so"
