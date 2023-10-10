@@ -1,6 +1,6 @@
 require ${WORKSPACE}/sources/eap-qti-kernel/linux-qti-addon.inc
 
-S = "${WORKDIR}/git"
+PREMIRRORS_remove = "git://.*/.*   http://downloads.yoctoproject.org/mirror/sources/ \n \"
 
 deltask unpack_extra patch_extra
 addtask unpack_extra after do_kernel_metadata before do_patch
