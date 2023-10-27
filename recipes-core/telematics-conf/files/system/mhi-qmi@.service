@@ -1,0 +1,8 @@
+[Unit]
+Description=MHI QMI port %I
+BindsTo=dev-%i.device
+After=dev-%i.device
+
+[Service]
+Type=simple
+ExecStart=/bin/cat /dev/%I

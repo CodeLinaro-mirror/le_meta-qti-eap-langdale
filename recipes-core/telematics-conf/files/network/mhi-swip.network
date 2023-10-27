@@ -1,0 +1,6 @@
+[Match]
+Name=mhi_swip*
+
+[Network]
+DHCP=yes
+IPForward=yes

@@ -1,0 +1,170 @@
+#!/bin/sh
+#
+# Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are
+# met:
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimer.
+#     * Redistributions in binary form must reproduce the above
+#       copyright notice, this list of conditions and the following
+#       disclaimer in the documentation and/or other materials provided
+#       with the distribution.
+#     * Neither the name of The Linux Foundation nor the names of its
+#       contributors may be used to endorse or promote products derived
+#       from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+# ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+# BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+# BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+# OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+# IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+# DESCRIPTION: Setup USB pass through for selected interfaces from host
+# port to device port. E.g. To export interface 0 and 1 of the USB device
+# to the USB host use: "usb_bridge_config 0 1"
+
+SCRIPT_NAME=$0
+VID=0x05C6
+PID=0x9FFF
+GADGET_DIR=/sys/kernel/config/usb_gadget
+STRINGS_DIR=strings/0x409
+
+trap "" HUP
+
+print_usage () {
+    echo "Usage: $SCRIPT_NAME [options]"
+    echo -e "\t-e \"<iface number> ... <iface number>\": Enable listed interfaces"
+    echo -e "\t-d \"<iface number> ... <iface number>\": Disable listed interfaces"
+    echo -e "\t-D: Disable all interfaces"
+    echo -e "\t-u \"<UDC name>\""
+    echo -e "\t-h: Print help"
+}
+
+if [ $# -eq 0 ]; then
+    print_usage
+    exit
+fi
+
+# Parse arguments
+while getopts ":e:d:u:hD" opt; do
+    case $opt in
+        e ) ENABLE_LIST=$OPTARG
+                ;;
+        d ) DISABLE_LIST=$OPTARG
+            DISCONNECT=1
+                ;;
+        D ) DISCONNECT=1
+            DISCONNECT_ALL=1
+                ;;
+        u ) UDC_NAME=$OPTARG
+                ;;
+        h ) print_usage
+            exit 1
+                ;;
+        * ) print_usage
+            exit 1
+                ;;
+        esac
+done
+
+get_udc () {
+    cd /sys/class/udc
+    for _dir in *
+    do
+        if [ -d "${_dir}" ]; then
+            UDC_NAME="${_dir}"
+            break
+        fi
+    done
+}
+
+disconnect_all () {
+    # Remove existing functions
+    rm -rf $GADGET_DIR/g1/configs/c.1/usb_bridge.*
+    rm -rf $GADGET_DIR/g1/functions/usb_bridge.*
+}
+
+disconnect_select () {
+    # Remove listed functions
+    for intf in ${@}; do
+        if [ -L "$GADGET_DIR/g1/configs/c.1/usb_bridge.$intf" ]; then
+            rm -rf $GADGET_DIR/g1/configs/c.1/usb_bridge.$intf
+        fi
+        if [ -d "$GADGET_DIR/g1/functions/usb_bridge.$intf" ]; then
+            rm -rf $GADGET_DIR/g1/functions/usb_bridge.$intf
+        fi
+    done
+}
+
+if [ -z "$UDC_NAME" ]; then
+        get_udc
+fi
+
+# Setup gadget device
+cd $GADGET_DIR
+if [ ! -d "$GADGET_DIR/g1" ]; then
+    if [ ! -z "$DISCONNECT" ];then
+        exit 0
+    fi
+    mkdir g1
+else
+    # Check if gadget already enabled
+    IS_ENABLE=$(cat $GADGET_DIR/g1/UDC)
+    if [ -z "$IS_ENABLE" ]; then
+        echo $VID > $GADGET_DIR/g1/idVendor
+        echo $PID > $GADGET_DIR/g1/idProduct
+    else
+        echo "" > $GADGET_DIR/g1/UDC
+    fi
+
+    if [ ! -z "$DISCONNECT_ALL" ]; then
+        disconnect_all
+        echo "$UDC_NAME" > $GADGET_DIR/g1/UDC
+        exit 0
+    elif [ ! -z "$DISCONNECT" ]; then
+        disconnect_select $DISABLE_LIST
+        echo "$UDC_NAME" > $GADGET_DIR/g1/UDC
+        exit 0
+    fi
+fi
+
+cd g1
+
+if [ ! -d "$GADGET_DIR/g1/$STRINGS_DIR" ]; then
+    mkdir $STRINGS_DIR
+    echo "QTI" > $STRINGS_DIR/manufacturer
+    echo "QTI Modem" > $STRINGS_DIR/product
+    echo "qti-modem" > $STRINGS_DIR/serialnumber
+fi
+
+if [ ! -d "$GADGET_DIR/g1/configs/c.1" ]; then
+    mkdir configs/c.1
+else
+    disconnect_all
+fi
+
+for intf in $ENABLE_LIST; do
+    if [ ! -z $intf ]; then
+        if [ ! -d "$GADGET_DIR/g1/functions/usb_bridge.$intf" ]; then
+            mkdir functions/usb_bridge.$intf
+        fi
+        if [ ! -L "$GADGET_DIR/g1/configs/c.1/usb_bridge.$intf" ]; then
+            ln -s functions/usb_bridge.$intf configs/c.1
+        fi
+    fi
+done
+
+# Restart gadget
+IS_ENABLE=$(cat $GADGET_DIR/g1/UDC)
+if [ ! -z "$IS_ENABLE" ]; then
+    echo "" > UDC
+fi
+echo "$UDC_NAME" > UDC

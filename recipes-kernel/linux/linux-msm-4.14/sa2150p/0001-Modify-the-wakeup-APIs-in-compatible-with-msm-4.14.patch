@@ -1,0 +1,42 @@
+From edcba6efae1e20593922cb890f93851272baac4c Mon Sep 17 00:00:00 2001
+From: Akshaya Bhat <akshayab@codeaurora.org>
+Date: Wed, 22 Apr 2020 18:02:55 +0530
+Subject: [PATCH] Modify the wakeup APIs in compatible with msm-4.14
+
+Change-Id: I43b4d978c76a1ce5ec53d6a9239ffccb9407fd00
+Signed-off-by: Akshaya Bhat <akshayab@codeaurora.org>
+---
+ drivers/qti/diag/diagchar_core.c | 3 ++-
+ drivers/qti/qrtr/qrtr.c          | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/qti/diag/diagchar_core.c b/drivers/qti/diag/diagchar_core.c
+index 2967fde..8fae9b4 100644
+--- a/drivers/qti/diag/diagchar_core.c
++++ b/drivers/qti/diag/diagchar_core.c
+@@ -4287,7 +4287,8 @@ static int diagchar_setup_cdev(dev_t devno)
+ 	if (!driver->diag_dev)
+ 		return -EIO;
+ 
+-	driver->diag_dev->power.wakeup = wakeup_source_register("DIAG_WS");
++	driver->diag_dev->power.wakeup = wakeup_source_register(driver->diag_dev,
++								"DIAG_WS");
+ 	return 0;
+ 
+ }
+diff --git a/drivers/qti/qrtr/qrtr.c b/drivers/qti/qrtr/qrtr.c
+index 59537ed..539efdb 100644
+--- a/drivers/qti/qrtr/qrtr.c
++++ b/drivers/qti/qrtr/qrtr.c
+@@ -665,7 +665,7 @@ static void qrtr_node_assign(struct qrtr_node *node, unsigned int nid)
+ 	 * cause APPS suspend problems and power drain issue.
+ 	 */
+ 	if (!node->ws && nid != 9)
+-		node->ws = wakeup_source_register(name);
++		node->ws = wakeup_source_register(NULL, name);
+ }
+ 
+ /**
+-- 
+1.9.1
+

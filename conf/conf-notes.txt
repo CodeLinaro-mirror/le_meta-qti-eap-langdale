@@ -1,0 +1,16 @@
+========== Building telematics image for iMX6q sabrelite =====================
+
+bitbake telematics-image
+
+==============================================================================
+
+Other common targets to build
+-----------------------------
+    core-image-minimal : Minimal image with only a shell and basic apps
+    -c do_populate_sdk : to generate the SDK image for the platform
+
+
+Other aliases
+-------------
+    rebake <recipe> : to cleanall of recipe's components and rebuild.
+    buildclean : to remove the entire platform build and re-build all.

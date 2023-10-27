@@ -1,0 +1,37 @@
+From beab734b7e3b4080f691740387ddd3dbfe91d7f8 Mon Sep 17 00:00:00 2001
+From: Gustavo Solaira <gustavos@codeaurora.org>
+Date: Mon, 5 Nov 2018 13:22:30 -0800
+Subject: [PATCH 2/3] pci: imx: Increase number of retries for link up
+
+Try to bring the link up for 20 seconds before
+failing. This is needed in order to detect hosts
+that take longer to initialize.
+
+Signed-off-by: Gustavo Solaira <gustavos@codeaurora.org>
+---
+ drivers/pci/dwc/pci-imx6.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/pci/dwc/pci-imx6.c b/drivers/pci/dwc/pci-imx6.c
+index 051e11b..42d366f 100644
+--- a/drivers/pci/dwc/pci-imx6.c
++++ b/drivers/pci/dwc/pci-imx6.c
+@@ -1399,13 +1399,13 @@ static void imx_pcie_init_phy(struct imx_pcie *imx_pcie)
+ 
+ static int imx_pcie_wait_for_link(struct imx_pcie *imx_pcie)
+ {
+-	int count = 20000;
++	int count = 200000;
+ 	struct dw_pcie *pci = imx_pcie->pci;
+ 	struct device *dev = pci->dev;
+ 
+ 	/* check if the link is up or not */
+ 	while (!dw_pcie_link_up(pci)) {
+-		udelay(10);
++		udelay(100);
+ 		if (--count)
+ 			continue;
+ 
+-- 
+1.9.1
+
