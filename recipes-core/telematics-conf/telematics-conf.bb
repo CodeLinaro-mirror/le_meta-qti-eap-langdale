@@ -16,11 +16,11 @@ SYSTEMD_SERVICE:${PN} = "iptables-masquerade.service"
 
 do_install() {
     install -d ${D}${sysconfdir}/systemd/network
-    install -m 0644 ${WORKDIR}/network/*.network ${D}${sysconfdir}/systemd/network/
+    install -m 0644 ${UNPACKDIR}/network/*.network ${D}${sysconfdir}/systemd/network/
     install -d ${D}${sysconfdir}/udev/rules.d
-    install -m 0644 ${WORKDIR}/udev/* ${D}${sysconfdir}/udev/rules.d/
+    install -m 0644 ${UNPACKDIR}/udev/* ${D}${sysconfdir}/udev/rules.d/
     install -d ${D}${sysconfdir}/systemd/system
-    install -m 0644 ${WORKDIR}/system/* ${D}${sysconfdir}/systemd/system/
+    install -m 0644 ${UNPACKDIR}/system/* ${D}${sysconfdir}/systemd/system/
     install -d ${D}${sbindir}/
-    install -m 0755 ${WORKDIR}/usb/* ${D}${sbindir}/
+    install -m 0755 ${UNPACKDIR}/usb/* ${D}${sbindir}/
 }

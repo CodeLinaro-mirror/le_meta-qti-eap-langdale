@@ -24,12 +24,12 @@
 DESCRIPTION = "Network Block Device"
 HOMEPAGE = "http://nbd.sourceforge.io"
 SECTION = "net"
-LICENSE = "GPLv2"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
 DEPENDS = "glib-2.0"
 
-SRC_URI = "git://github.com/networkblockdevice/nbd.git"
+SRC_URI = "git://github.com/networkblockdevice/nbd.git;nobranch=1"
 SRCREV = "e757bde96ac7a24f2be4e9d025486990ceb910ef"
 
 SRC_URI += "file://0001-Disable-manpages-compilation.patch"
@@ -61,15 +61,15 @@ do_install:append() {
    if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
        #Install server config
        install -d ${D}${sysconfdir}/
-       install -m 0644 ${WORKDIR}/nbd_config ${D}${sysconfdir}/nbd_config
+       install -m 0644 ${UNPACKDIR}/nbd_config ${D}${sysconfdir}/nbd_config
        #Install systemd service file
        install -d ${D}${systemd_unitdir}/system
-       install -m 0644 ${WORKDIR}/nbdserver.service ${D}${systemd_unitdir}/system/
+       install -m 0644 ${UNPACKDIR}/nbdserver.service ${D}${systemd_unitdir}/system/
        #Install the service for multi-user.target
        # Disable launching of nbd service by default
        #install -d ${D}${systemd_unitdir}/system/multi-user.target.wants/
        #ln -sf ${systemd_unitdir}/system/nbdserver.service \
-       #      ${D}${systemd_unitdir}/system/multi-user.target.wants/nbdserver.service
+       #${D}${systemd_unitdir}/system/multi-user.target.wants/nbdserver.service
    fi
 }
 
