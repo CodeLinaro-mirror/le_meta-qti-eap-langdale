@@ -1,0 +1,21 @@
+From bbec5ecf31623172be93571fc22690423ee28bdf Mon Sep 17 00:00:00 2001
+From: venper <venper@qti.qualcomm.com>
+Date: Fri, 26 Sep 2025 14:01:04 +0530
+Subject: [PATCH] extra: nanopb-config.cmake: remove unwanted symbol
+
+Upstream-Status: Inappropriate [oe specific]
+
+---
+ extra/nanopb-config.cmake | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/extra/nanopb-config.cmake b/extra/nanopb-config.cmake
+index 4f726a6..42d977a 100644
+--- a/extra/nanopb-config.cmake
++++ b/extra/nanopb-config.cmake
+@@ -1 +1 @@
+-include(${CMAKE_CURRENT_LIST_DIR}/nanopb-targets.cmake)
++include(${CMAKE_CURRENT_LIST_DIR}/nanopb-targets.cmake)
+-- 
+2.17.1
+

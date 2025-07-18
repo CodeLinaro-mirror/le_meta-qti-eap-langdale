@@ -17,8 +17,9 @@ SRCREV = "cc74b9f200176edc5524aa00ba45fa90a5e87d27"
 PV = "0.3.8_git_${SRCREV}"
 
 SRC_URI = "git://git.codelinaro.org/clo/le/nanopb.git;protocol=https;branch=caf_migration/nanopb/master"
-SRC_URI += "${@bb.utils.contains_any('LAYERSERIES_COMPAT_core', 'nanbield scarthgap',\
+SRC_URI += "${@bb.utils.contains_any('LAYERSERIES_COMPAT_core', 'nanbield scarthgap styhead walnascar',\
            'file://0002-compilation-fixes-for-nanbield-scarthgap.patch','', d)}"
+SRC_URI += "file://0001-extra-nanopb-config.cmake-remove-unwanted-symbol.patch"
 SRC_URI += "file://0001-bitbake-using-cmake.patch"
 
 S = "${WORKDIR}/git"

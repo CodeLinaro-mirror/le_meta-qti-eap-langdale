@@ -3,6 +3,7 @@ From: Dheeraj Shetty <dshetty@codeaurora.org>
 Date: Mon, 9 Jul 2018 15:54:51 -0700
 Subject: [PATCH] bitbake using cmake
 
+Upstream-Status: Inappropriate [oe specific]
 ---
  CMakeLists.txt            | 27 ++++++++++++++++-----
  extra/nanopb-config.cmake | 60 ++++++++++++++++++++++++++++++++++++++++++++++-
