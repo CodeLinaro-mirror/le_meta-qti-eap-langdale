@@ -2,6 +2,7 @@ From 35f1ac372bbb27dfa823805c17ec15f96f0eb371 Mon Sep 17 00:00:00 2001
 From: Gustavo Solaira <gustavos@codeaurora.org>
 Date: Mon, 5 Aug 2019 22:41:36 -0700
 Subject: [PATCH] Disable manpages compilation
+Upstream-Status: Inappropriate
 
 ---
  Makefile.am  |  2 +-
