@@ -42,12 +42,16 @@ do_install:append() {
     install -m 0644 ${WORKDIR}/telux/public/apps/tests/telsdk_console_app/config_files/telsdk_app.conf -D ${D}${sysconfdir}/telsdk_app.conf
     if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
         if ${@bb.utils.contains_any('MACHINE_FEATURES', 'qti-vm-guest external-ap', 'false', 'true', d)}; then
-            install -m 0644 ${WORKDIR}/telux_power_refd.service -D ${D}${systemd_unitdir}/system/telux_power_refd.service
+            install -m 0644 ${UNPACKDIR}/telux_power_refd.service -D ${D}${systemd_unitdir}/system/telux_power_refd.service
         fi
     fi
 }
 
 FILESPATH =+ "${WORKSPACE}:"
-FILES_${PN} += "${systemd_unitdir}"
-FILES_SOLIBSDEV = ""
-FILES_${PN} += "${libdir}/*.so"
+FILES:${PN} += "${systemd_unitdir}"
+FILES_SOLIBSDEV := ""
+FILES:${PN} += "${libdir}/*.so"
+
+INSANE_SKIP:${PN}-staticdev += "buildpaths"
+INSANE_SKIP:${PN} += "buildpaths"
+INSANE_SKIP:${PN}-dbg += "buildpaths"
