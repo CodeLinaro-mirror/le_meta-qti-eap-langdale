@@ -20,6 +20,7 @@ RDEPENDS:${PN} += "telux-samples"
 RDEPENDS:${PN} += "telematics-conf"
 
 RDEPENDS:${PN} += "rsync"
+RDEPENDS:${PN} += "qdloader"
 
 ##### Packages with QTI dependencies #####
 #RDEPENDS:${PN} += "${@oe.utils.conditional('WITH_PROP_LAYER', 'yes', 'loc-socket', '', d)}"
