@@ -4,8 +4,7 @@ PR = "r0"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-inherit packagegroup
-
+inherit packagegroup useradd
 # Open source packages
 
 ##### Data component #####
@@ -31,3 +30,15 @@ RDEPENDS:${PN} += "qdloader"
 # Target SDK Packages
 #TOOLCHAIN_TARGET_TASK:append_sa2150p += "telux"
 #TOOLCHAIN_TARGET_TASK:append_sa2150p += "loc-pla-hdr"
+PACKAGES = "${PN}"
+USERADD_PACKAGES = "${PN}"
+GROUPADD_PARAM:${PN} = " \
+    -r system; \
+    -r sdcard; \
+    -r wakelock; "
+
+# Create 'system' user: system account (-r), primary gid 'system',
+# and add to supplemental groups 'sdcard,wakelock'
+USERADD_PARAM:${PN} = "\
+    --system --gid system --groups sdcard,wakelock system; \
+"
