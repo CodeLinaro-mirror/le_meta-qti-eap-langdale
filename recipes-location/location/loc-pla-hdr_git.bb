@@ -1,4 +1,4 @@
-inherit autotools-brokensep pkgconfig
+inherit pkgconfig
 
 DESCRIPTION = "GPS Loc Platform Library Abstraction"
 PR = "r1"

@@ -1,1 +1,0 @@
-RPROVIDES += "python-io-native"
