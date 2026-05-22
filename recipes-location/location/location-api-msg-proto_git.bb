@@ -14,6 +14,19 @@ DEPENDS = "glib-2.0 protobuf protobuf-native abseil-cpp loc-pla-hdr gps-utils"
 
 FILES:${PN} += "${libdir}/*"
 
+# Include unversioned .so files in the main package
+FILES:${PN} += "${libdir}/lib*.so.*"
+FILES:${PN} += "${libdir}/lib*.so"
+
+# Clear the default dev package pattern so it doesn't "steal" the .so
+FILES_SOLIBSDEV = ""
+
+# Ensure the library name doesn't require a version suffix
+SOLIBS = ".so"
+
+# Skip the QA check that forbids .so symlinks in non-dev packages
+INSANE_SKIP:${PN} += "dev-so"
+
 do_compile:prepend () {
     echo "Running location_api_msg_protobuf_gen.sh"
     cd ${S}
