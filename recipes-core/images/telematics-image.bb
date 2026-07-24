@@ -1,6 +1,6 @@
 require recipes-core/images/core-image-minimal.bb
 
-IMAGE_FEATURES:append = " package-management ssh-server-dropbear"
+IMAGE_FEATURES:append = " package-management"
 
 IMAGE_INSTALL:append = " packagegroup-telematics-utils"
 IMAGE_INSTALL:append = " packagegroup-telematics-qti"

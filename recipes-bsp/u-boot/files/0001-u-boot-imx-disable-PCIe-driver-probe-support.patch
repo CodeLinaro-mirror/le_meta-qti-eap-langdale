@@ -1,0 +1,52 @@
+From b4727cc29d7c1123c8a2c20f2c565dc39484e5b0 Mon Sep 17 00:00:00 2001
+From: Venkatesh Perumal <venper@qti.qualcomm.com>
+Date: Thu, 9 Jul 2026 10:37:14 +0530
+Subject: [PATCH] u-boot-imx: disable PCIe driver probe support
+
+Upstream-Status: Inappropriate [Platform-specific PCIe disablement for i.MX95 EVK validation]
+
+In U-Boot 2025.04 (Walnascar-based bootloader), the CONFIG_PCIE_DW_IMX
+PCIe controller driver is enabled by default and initializes the PCIe
+link during the bootloader stage.
+
+For the Fusion PCIe use case, PCIe link establishment and recovery are
+expected to be managed by the Linux kernel. When PCIe initialization
+occurs in both U-Boot and the kernel, it interferes with the Fusion
+PCIe link disconnect/re-establishment flow and can lead to
+Fusion crashes during PCIe recovery.
+
+This change adds support to disable the CONFIG_PCIE_DW_IMX driver
+probe in U-Boot on the NXP i.MX95 B0 platform,
+allowing PCIe initialization to be handled exclusively
+by the kernel and preventing conflicts during PCIe link recovery.
+
+NXP-IMX95 B0 19x19 revision CONFIG_PCIE_DW_IMX driver probe
+disablemnt support adding.
+
+In latest u-boot 2025.04 in walnascar based bootloader PCIE driver
+enabled in the u-boot, this will impact our fusion pcie-livk disconnect
+and re-establishment flow instaed of kernelk time pcie-linkup, due to
+this support was present in the u-booot,so fusion getting crashed when
+we tried u-boot and kernel both.
+
+Signed-off-by: Venkatesh Perumal <venper@qti.qualcomm.com>
+---
+ configs/imx95_19x19_evk_defconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configs/imx95_19x19_evk_defconfig b/configs/imx95_19x19_evk_defconfig
+index 03a9f20b4ac..602e13a7917 100644
+--- a/configs/imx95_19x19_evk_defconfig
++++ b/configs/imx95_19x19_evk_defconfig
+@@ -256,7 +256,7 @@ CONFIG_DM_RNG=y
+ CONFIG_IMX_ELE_RNG=y
+ CONFIG_ELE_SHARED_BUFFER=0x98000000
+ 
+-CONFIG_PCIE_DW_IMX=y
++CONFIG_PCIE_DW_IMX=n
+ CONFIG_NVME=y
+ CONFIG_NVME_PCI=y
+ CONFIG_CMD_NVME=y
+-- 
+2.17.1
+
